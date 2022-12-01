@@ -9,8 +9,7 @@ with open("input.txt") as f:
 # Break up our calorie list by elf
 i, elves, elf = 1, [], []
 for line in lines:
-    line = line.strip()
-    if line:
+    if line := line.strip():
         elf.append(int(line))
         continue
     elves.append(elf)
