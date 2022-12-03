@@ -56,7 +56,7 @@ For example:
 ``` python
 from AoC_2022.day2 import *
 
-with open("../data/day2_input.txt") as f:
+with open("data/day2_input.txt") as f:
     data = [rps_decode(x.strip()) for x in f.readlines()]
 score_strategy(data)
 ```
