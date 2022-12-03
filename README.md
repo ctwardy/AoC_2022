@@ -5,7 +5,8 @@ AoC_2022
 
 This is my first year of AoC, and I’ve decided to use it to practice
 with [nbdev](https://nbdev.fast.ai) to automatically generate modules
-and documentation from my notebooks.
+and [documentation](https://ctwardy.github.io/AoC_2022/) from my
+notebooks.
 
 I’ll probably evolve my organization as I go. I did Day 1 with a regular
 python module and that made sense to put each day in its own folder with
@@ -17,21 +18,40 @@ put the data in `data/dayX_input.txt`. Like so:
 !ls ../data
 ```
 
-    day2_input.txt
+    day2_input.txt day3_input.txt
 
 ## Install
 
-``` sh
-pip install AoC_2022
+There’s no reason to install this, so we’re not using nbdev’s ability to
+automatically package for pip and conda. Probably you will just browse
+the [documentation](https://ctwardy.github.io/AoC_2022/) or [view the
+code](https://github.com/ctwardy/AoC_2022) in GitHub. Of course you
+could `git pull` the code yourself if you want. If using https that
+would be:
+
+``` shell
+git pull https://github.com/ctwardy/AoC_2022.git
+```
+
+If using the git CLI that would be:
+
+``` shell
+gh repo clone ctwardy/AoC_2022.git
 ```
 
 ## How to use
 
-You should then be able to import the desired module and run it.
+All functions are exported to the `AoC_2022` package.
 
-TBD: standardize the data input so each day has the same command.
+1.  Install the package locally.
 
-TBD: and maybe just a `.run` method or something
+``` shell
+pip install -e '.[dev]'
+```
+
+2.  Import the desired module and use its functions.
+
+For example:
 
 ``` python
 from AoC_2022.day2 import *
