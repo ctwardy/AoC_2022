@@ -17,7 +17,8 @@ CrZsJsPPZsGzwwsLwLmpwMDw
 packs_ex = example.split()
 
 # %% ../nbs/03_day3.ipynb 8
-def get_compartments(packs: list[str]) -> list[tuple]:
+def get_compartments(packs: list[str] # List of pack contents like ['vJrwpWtw', ...]
+                    ) -> list[tuple]: # Split each pack like ('vJrw', 'pWtw')
     """Split each pack down the middle."""
     lengths = [len(x) for x in packs]
     return [(pack[:lengths[i]//2], pack[lengths[i]//2:]) 
@@ -26,7 +27,8 @@ def get_compartments(packs: list[str]) -> list[tuple]:
 get_compartments(packs_ex)
 
 # %% ../nbs/03_day3.ipynb 10
-def get_shared(compartments: list[tuple]) -> list[str]:
+def get_shared(compartments: list[tuple] # ('vJrw','pWtw')
+              ) -> list[str]: # Single char like 'w' here.
     """Find the shared item in each pack: same in both compartments."""
     return [set(left).intersection(right).pop()
             for left, right in compartments]
@@ -37,7 +39,8 @@ shared
 # %% ../nbs/03_day3.ipynb 12
 BASE_LOWER = ord("a") - 1
 BASE_UPPER = ord("A") - 27
-def priority(char: str) -> int:
+def priority(char: str # Single char like 'w'
+            ) -> int: # Priority 1..27
     """Return priority 1..52 of item in pack."""
     if char.lower() == char:
         return ord(char) - BASE_LOWER
@@ -45,16 +48,22 @@ def priority(char: str) -> int:
 
 
 # %% ../nbs/03_day3.ipynb 23
-def intersect(left, right) -> str:
+from typing import Collection
+
+def intersect(left: Collection, # Items in first group
+              right: Collection # Items in second group
+             ) -> str: # Items common to both 
     """Find set intersection btw two args."""
     return set(left).intersection(right)
 
-def get_badge(group: list[str]) -> str:
-    """Find common item """
+def get_badge(group: list[str] # List of item names
+             ) -> str: # The single item common to all
+    """Find common item. Assumes there is precisely 1."""
     return reduce(intersect, group).pop()
 
 # %% ../nbs/03_day3.ipynb 26
-def get_groups(packs: list[str]) -> list[list]:
+def get_groups(packs: list[str] # List of all packs
+              ) -> list[list]:  # Divided into lists of 3
     """Split packlist into groups of 3"""
     return [[packs[i], packs[i+1], packs[i+2]]
             for i in range(0, len(packs), 3)]
