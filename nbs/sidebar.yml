@@ -4,3 +4,4 @@ website:
       - index.ipynb
       - 00_core.ipynb
       - 02_day2.ipynb
+      - 03_day3.ipynb

@@ -3,6 +3,18 @@
 # %% auto 0
 __all__ = ['shared', 'BASE_LOWER', 'BASE_UPPER', 'get_compartments', 'get_shared', 'priority']
 
+# %% ../nbs/03_day3.ipynb 4
+example = """
+vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw
+"""
+
+packs_ex = example.split()
+
 # %% ../nbs/03_day3.ipynb 8
 def get_compartments(packs: list[str]) -> list[tuple]:
     """Split each pack down the middle."""
