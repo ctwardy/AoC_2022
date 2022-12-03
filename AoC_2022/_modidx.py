@@ -5,4 +5,8 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://ctwardy.github.io',
                 'git_url': 'https://github.com/ctwardy/AoC_2022',
                 'lib_path': 'AoC_2022'},
-  'syms': {'AoC_2022.core': {'AoC_2022.core.foo': ('core.html#foo', 'AoC_2022/core.py')}}}
+  'syms': { 'AoC_2022.core': {'AoC_2022.core.foo': ('core.html#foo', 'AoC_2022/core.py')},
+            'AoC_2022.day2': { 'AoC_2022.day2.get_plan': ('day2.html#get_plan', 'AoC_2022/day2.py'),
+                               'AoC_2022.day2.rps_decode': ('day2.html#rps_decode', 'AoC_2022/day2.py'),
+                               'AoC_2022.day2.score_round': ('day2.html#score_round', 'AoC_2022/day2.py'),
+                               'AoC_2022.day2.score_strategy': ('day2.html#score_strategy', 'AoC_2022/day2.py')}}}

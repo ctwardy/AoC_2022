@@ -5,5 +5,5 @@ website:
   title: "AoC_2022"
   site-url: "https://ctwardy.github.io/AoC_2022"
   description: "My Advent of Code 2022 Entries"
-  repo-branch: master
+  repo-branch: main
   repo-url: "https://github.com/ctwardy/AoC_2022"
