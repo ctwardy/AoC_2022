@@ -9,4 +9,7 @@ d = { 'settings': { 'branch': 'main',
             'AoC_2022.day2': { 'AoC_2022.day2.get_plan': ('day2.html#get_plan', 'AoC_2022/day2.py'),
                                'AoC_2022.day2.rps_decode': ('day2.html#rps_decode', 'AoC_2022/day2.py'),
                                'AoC_2022.day2.score_round': ('day2.html#score_round', 'AoC_2022/day2.py'),
-                               'AoC_2022.day2.score_strategy': ('day2.html#score_strategy', 'AoC_2022/day2.py')}}}
+                               'AoC_2022.day2.score_strategy': ('day2.html#score_strategy', 'AoC_2022/day2.py')},
+            'AoC_2022.day3': { 'AoC_2022.day3.get_compartments': ('day3.html#get_compartments', 'AoC_2022/day3.py'),
+                               'AoC_2022.day3.get_shared': ('day3.html#get_shared', 'AoC_2022/day3.py'),
+                               'AoC_2022.day3.priority': ('day3.html#priority', 'AoC_2022/day3.py')}}}
