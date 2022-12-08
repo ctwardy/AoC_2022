@@ -114,4 +114,6 @@ but my `settings.ini` didn’t declare a `numpy` dependency. I dropped the
 import. (2) I had used 3.10 type hints like `int|str`. Bumped
 `settings.ini` to specify 3.10. (3) But it still installed 3.9.15, which
 now failed to satisfy `settings.ini`. (4) Changed `setup.py` to force
-3.10. Same error. (5)
+3.10. Same error. (5) Ah, the answer was to modify
+`.github/workflows/test.yml` per [this forum
+post](https://forums.fast.ai/t/python-version-error-while-running-ci-operations-in-github/98482/8).
