@@ -20,8 +20,10 @@ def print_state(state: list[list[str]])-> None:
     print(" ".join(f"{i+1}" for i in range(len(state[0]))))
 
 
-# %% ../nbs/day5.ipynb 14
+# %% ../nbs/day5.ipynb 13
 #| code-fold: true
+from collections import deque
+
 def stackify(state: list[list] # Crate state in visual format
             )-> list[deque]:   # State as list of stacks, no blanks
     """Convert row-oriented input to compact stacks, top=right."""
@@ -37,7 +39,7 @@ def print_stacks(stacks: list[deque])-> None:
     for i, stack in enumerate(stacks):
         print(f"{(i+1)} {' '.join(stack)}{pad[i]}")
 
-# %% ../nbs/day5.ipynb 18
+# %% ../nbs/day5.ipynb 17
 def get_moves(rowdata: list[str]  # As from readlines
              )-> list[list[int]]: # [[n, from_col, to_col], ...
     """Extract move data from input"""
@@ -55,7 +57,7 @@ def print_moves(moves: list[list[int]])-> None:
     """Verbosely print a terse movelist."""
     print("\n".join(f"Move {n} from {old} to {new}" for n, old, new in moves))
 
-# %% ../nbs/day5.ipynb 21
+# %% ../nbs/day5.ipynb 20
 #| code-fold: true
 def move(
     n:    int|str,     # Move this many
@@ -76,14 +78,14 @@ def move1box(
     to_stack.append(from_stack.pop())
 
 
-# %% ../nbs/day5.ipynb 38
+# %% ../nbs/day5.ipynb 37
 #| code-fold: true
 def top_crates(stacks: list[deque]  # List of stacks
               )-> str:              # Crates on top
     """Find the crates on top of each stack"""
     return "".join(stack[-1] for stack in stacks)
 
-# %% ../nbs/day5.ipynb 49
+# %% ../nbs/day5.ipynb 48
 #| code-fold: true
 def moveall(
     n:    int|str,     # Move this many
