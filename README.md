@@ -93,3 +93,16 @@ makes documentation tempting. That’s not necessarily a bad thing.
 **Nbdev**: `nbdev_prep` caught a leftover day3 cell at the bottom of my
 day4 notebook. Cool. But after fixing, the running preview still didn’t
 have day4. But stopping and re-running did. Guess that’s a thing.
+
+## Day5: Supply Stacks
+
+This took me surprisingly long. I had the example parsed in 45 minutes,
+but then realized `move()` would be easier with stacks, and iterating on
+that entered a regress. Once the example ran, Part 1 followed with one
+tweak, then Part 2 needed only a quick rewrite of `move()`.
+
+**Nbdev**: GitHub CI still failed. (1) I had an unused `import numpy`
+but my `settings.ini` didn’t declare a `numpy` dependency. I dropped the
+import. (2) I had used 3.10 type hints like `int|str`. Bumped
+`settings.ini` to specify 3.10. (3) But it still installed 3.9.15, which
+now failed to satisfy `settings.ini`.
