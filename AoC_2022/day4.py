@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['get_assignments', 'right_contains_left', 'left_contains_right', 'contains', 'disjoint', 'overlap']
 
-# %% ../nbs/day4.ipynb 6
+# %% ../nbs/day4.ipynb 7
 #| code-fold: true
 def get_assignments(data: list[str] # List of assignment pairs "2-4,6-8"
                     ) -> list[list[int]]: # List of [min,max,min,max]
@@ -11,7 +11,7 @@ def get_assignments(data: list[str] # List of assignment pairs "2-4,6-8"
     _ = (row.replace("-",",").split(",") for row in data)
     return [[int(x) for x in row] for row in _]
 
-# %% ../nbs/day4.ipynb 8
+# %% ../nbs/day4.ipynb 9
 #| code-fold: true
 def right_contains_left(row: list[int] # [min,max,min,max]
                        )-> bool: # Right pair contains left
@@ -27,7 +27,7 @@ def contains(row: list[int] # [min,max,min,max]
 
 
 
-# %% ../nbs/day4.ipynb 17
+# %% ../nbs/day4.ipynb 18
 #| code-fold: true
 def disjoint(row: list[int] # [min,max,min,max]
             )-> bool:       # The ranges are disjoint

@@ -4,7 +4,7 @@
 __all__ = ['win', 'lose', 'draw', 'MOVE_SCORES', 'OUTCOMES', 'RPS_CODE', 'WIN_MOVES', 'LOSE_MOVES', 'DRAW_MOVES', 'score_round',
            'score_strategy', 'rps_decode', 'get_plan']
 
-# %% ../nbs/02_day2.ipynb 9
+# %% ../nbs/02_day2.ipynb 10
 win, lose, draw = 6, 0, 3
 MOVE_SCORES = {"R": 1, "P": 2, "S": 3}
 OUTCOMES = {"RR": draw, "PP": draw, "SS": draw,
@@ -18,7 +18,7 @@ def score_round(moves: str) -> int:
 def score_strategy(strategy: list[str]) -> int:
     return sum(score_round(row) for row in strategy)
 
-# %% ../nbs/02_day2.ipynb 16
+# %% ../nbs/02_day2.ipynb 17
 RPS_CODE = str.maketrans("ABC", "RPS", " ")
 WIN_MOVES = {"R": "P", "P":"S", "S":"R"}
 LOSE_MOVES = {"R": "S", "P":"R", "S":"P"}
