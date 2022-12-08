@@ -82,6 +82,14 @@ generated docs are amazing. Worth it.
 **Nbdev**: Local docs were pretty easy. Spent *hours* troubleshooting on
 GitHub. Docs didn’t like index.ipynb using `../data/` for file location.
 Solved by making `nbs/data -> ../data` and then referring to `data/`.
+Later saw this in the docs:
+
+<div class="comment-note">
+
+All documentation related files should be included in your nbs_path, and
+all paths should be relative to it. …
+
+</div>
 
 ## Day 4: Camp Cleanup
 
@@ -105,4 +113,5 @@ tweak, then Part 2 needed only a quick rewrite of `move()`.
 but my `settings.ini` didn’t declare a `numpy` dependency. I dropped the
 import. (2) I had used 3.10 type hints like `int|str`. Bumped
 `settings.ini` to specify 3.10. (3) But it still installed 3.9.15, which
-now failed to satisfy `settings.ini`.
+now failed to satisfy `settings.ini`. (4) Changed `setup.py` to force
+3.10. Same error. (5)
