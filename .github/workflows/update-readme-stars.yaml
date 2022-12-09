@@ -1,0 +1,22 @@
+name: Update README star table⭐     # Thanks to k2bd for this workflow and action
+                                    # And ltwardy who showed me.
+on:
+  # schedule:
+  #   - cron: "51 */4 * * *"          # Every 4 hours
+  
+  workflow_dispatch:
+
+jobs:
+  update-readme-stars:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: k2bd/advent-readme-stars@v1
+        with:
+          year: 2022
+          userId: 1634919
+          leaderboardId: 1634919
+          sessionCookie: ${{ secrets.AOC_SESSION }}
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update README stars

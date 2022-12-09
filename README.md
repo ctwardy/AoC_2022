@@ -15,10 +15,18 @@ usual `nbs` folder for all the notebooks, one per day. In that case I’ll
 put the data in `data/dayX_input.txt`. Like so:
 
 ``` python
-!ls ../data
+!ls data/
 ```
 
-    day2_input.txt day3_input.txt
+    day2_input.txt day3_input.txt day4_input.txt day5_input.txt
+
+![CI](https://github.com/ctwardy/AoC_2022/actions/workflows/test.yaml/badge.svg)
+![Deploy](https://github.com/ctwardy/AoC_2022/actions/workflows/deploy.yaml/badge.svg)
+
+Not sure these are working quite right - maybe manual:
+![](https://img.shields.io/badge/day%20📅-8-blue.png)
+![](https://img.shields.io/badge/stars%20⭐-14-yellow.png)
+![](https://img.shields.io/badge/days%20completed-7-red.png)
 
 ## Explore
 
@@ -84,10 +92,12 @@ GitHub. Docs didn’t like index.ipynb using `../data/` for file location.
 Solved by making `nbs/data -> ../data` and then referring to `data/`.
 Later saw this in the docs:
 
-<div class="comment-note">
+<div>
 
-All documentation related files should be included in your nbs_path, and
-all paths should be relative to it. …
+> **Note**
+>
+> All documentation related files should be included in your nbs_path,
+> and all paths should be relative to it. …
 
 </div>
 
@@ -102,18 +112,28 @@ makes documentation tempting. That’s not necessarily a bad thing.
 day4 notebook. Cool. But after fixing, the running preview still didn’t
 have day4. But stopping and re-running did. Guess that’s a thing.
 
-## Day5: Supply Stacks
+## Day 5: Supply Stacks
 
 This took me surprisingly long. I had the example parsed in 45 minutes,
 but then realized `move()` would be easier with stacks, and iterating on
 that entered a regress. Once the example ran, Part 1 followed with one
 tweak, then Part 2 needed only a quick rewrite of `move()`.
 
-**Nbdev**: GitHub CI still failed. (1) I had an unused `import numpy`
-but my `settings.ini` didn’t declare a `numpy` dependency. I dropped the
-import. (2) I had used 3.10 type hints like `int|str`. Bumped
-`settings.ini` to specify 3.10. (3) But it still installed 3.9.15, which
-now failed to satisfy `settings.ini`. (4) Changed `setup.py` to force
-3.10. Same error. (5) Ah, the answer was to modify
-`.github/workflows/test.yml` per [this forum
-post](https://forums.fast.ai/t/python-version-error-while-running-ci-operations-in-github/98482/8).
+**Nbdev**: Worked locally but GitHub CI still failed. Hoo boy.
+
+1.  `import numpy` but `numpy` not found. Either add `numpy` dependency
+    to `settings.ini` or drop. Not using yet. Dropped.
+2.  I had used 3.10 type hints like `int|str`. But GH was using 3.9 so
+    this failed in CI. Bumped `settings.ini` to specify 3.10.
+3.  GH still using 3.9, which now failed to satisfy min version.
+4.  Changed `setup.py` to force 3.10. Same error.
+5.  Modify `.github/workflows/test.yml` per [this forum
+    post](https://forums.fast.ai/t/python-version-error-while-running-ci-operations-in-github/98482/8).
+    Same type hints error.
+6.  Go back to min of 3.8, and use `from __future__ import annotations`.
+    Supposed to work. Same error.
+7.  Add 3.10 to `.github/workflows/deploy.yml` as well. Kill
+    `__future__`. Success.
+
+Combo of something not quite working in `nbdev` config, and me not
+knowing how GitHub CI worked. Better now, I think.
