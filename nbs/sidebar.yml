@@ -2,8 +2,10 @@ website:
   sidebar:
     contents:
       - index.ipynb
-      - 00_core.ipynb
-      - 02_day2.ipynb
-      - 03_day3.ipynb
+      - 00_template.ipynb
+      - core.ipynb
+      - day2.ipynb
+      - day3.ipynb
       - day4.ipynb
       - day5.ipynb
+      - day6.ipynb

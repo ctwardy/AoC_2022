@@ -37,8 +37,4 @@ d = { 'settings': { 'branch': 'main',
                                'AoC_2022.day5.print_state': ('day5.html#print_state', 'AoC_2022/day5.py'),
                                'AoC_2022.day5.stackify': ('day5.html#stackify', 'AoC_2022/day5.py'),
                                'AoC_2022.day5.top_crates': ('day5.html#top_crates', 'AoC_2022/day5.py')},
-            'AoC_2022.day6': { 'AoC_2022.day6.baz_the_foo': ('day6.html#baz_the_foo', 'AoC_2022/day6.py'),
-                               'AoC_2022.day6.f': ('day6.html#f', 'AoC_2022/day6.py'),
-                               'AoC_2022.day6.g': ('day6.html#g', 'AoC_2022/day6.py'),
-                               'AoC_2022.day6.get_answer': ('day6.html#get_answer', 'AoC_2022/day6.py'),
-                               'AoC_2022.day6.h': ('day6.html#h', 'AoC_2022/day6.py')}}}
+            'AoC_2022.day6': {'AoC_2022.day6.get_pos_firstn_uniq': ('day6.html#get_pos_firstn_uniq', 'AoC_2022/day6.py')}}}
