@@ -18,12 +18,16 @@ put the data in `data/dayX_input.txt`. Like so:
 !ls data/
 ```
 
-    day2_input.txt day3_input.txt day4_input.txt day5_input.txt
+    day0_example.txt day3_input.txt   day6_example.txt
+    day0_input.txt   day4_input.txt   day6_input.txt
+    day2_input.txt   day5_input.txt   day7_input.txt
 
 ![CI](https://github.com/ctwardy/AoC_2022/actions/workflows/test.yaml/badge.svg)
 ![Deploy](https://github.com/ctwardy/AoC_2022/actions/workflows/deploy.yaml/badge.svg)
 
-Not sure these are working quite right - maybe manual:
+Not sure the AoC badges are working quite right? Do I have to update
+manually?
+
 ![](https://img.shields.io/badge/day%20📅-8-blue.png)
 ![](https://img.shields.io/badge/stars%20⭐-14-yellow.png)
 ![](https://img.shields.io/badge/days%20completed-7-red.png)
@@ -137,3 +141,35 @@ tweak, then Part 2 needed only a quick rewrite of `move()`.
 
 Combo of something not quite working in `nbdev` config, and me not
 knowing how GitHub CI worked. Better now, I think.
+
+## Day 6: Tuning Trouble
+
+This one was much easier. About 7-10 minutes to write up the example,
+and another 5-10 minutes to solve. It was quick to see that
+`len(set(s)) == n` would do it. The rest was just typing and fixing.
+
+**Nbdev:** ran find, but `nbdev_preview` hit a weird glitch where it
+forgot `examples` in the cell defining `get_pos_firstn_uniq()`, despite
+knowing it in the previous or next cell. So I just split the cell.
+
+## Day 7: No space on device
+
+Needed recursive ops to make & query a directory tree. Started with a
+simple class, then two helpers. Then noticed calls could be simpler if I
+defined magic methods like `__getitem__` and `__iter__`. Realized dirs
+needed to track `parent` which provided full `path` and `depth`.
+Recursion took some tuning. **Lessons learned:**
+
+- **Software Eng:** Beware copy/paste! Lost hours because call to Part1
+  had the wrong input. 🤦‍♂️
+- **Software Eng:** Incremental tests helped. Also, don’t be clever.
+- **Classes:**
+  [`Directory`](https://ctwardy.github.io/AoC_2022/day7.html#directory)
+  methods *can* use `isinstance(arg, Directory)`: it’s not defined yet,
+  but it *will be* before use. Clearer and more correct than
+  `if type(x) == type(me)`. But until 3.11 we can’t use
+  [`Directory`](https://ctwardy.github.io/AoC_2022/day7.html#directory)
+  as a type hint inside
+  [`Directory`](https://ctwardy.github.io/AoC_2022/day7.html#directory).
+- **Default mutable!** Declaring `_kids = []` as a `@dataclass` is a
+  default mutable in `__init__`. Bad!
