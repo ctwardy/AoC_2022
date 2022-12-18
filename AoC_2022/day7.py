@@ -10,12 +10,12 @@ from dataclasses import dataclass, field
 @dataclass
 class FileObj():
     """Base class for File & Directory. Has a name"""
-    name: str
+    name: str   # Name of the file or dir.
         
 @dataclass
 class File(FileObj):
     """Files have name and size"""
-    size: int
+    size: int   # Size of a file is given
         
     def __str__(me):
         return f"{me.name} (file, size={me.size})"
@@ -25,16 +25,17 @@ class File(FileObj):
 @dataclass
 class Directory(FileObj):
     """Directories have kids (files or dirs), and PARENT"""
-    parent: FileObj=None
+    parent: FileObj=None  # My parent dir. Set when I'm appended.
     _kids: dict[str: FileObj] = field(default_factory=dict)
     
     @property
     def size(me):
+        """Dir size is sum of kids' sizes."""
         return sum(f.size for f in me._kids.values())
     
     @property
     def path(me) -> str:
-        """The path/to/me/"""
+        """The path/to/me/.  <- Note slash placement."""
         try:
             return f"{me.parent.path}{me.name}/"
         except AttributeError:
@@ -47,15 +48,15 @@ class Directory(FileObj):
     
     @property
     def subdirs(me):
-        """My kids what has kids"""
+        """My kids what could has kids. Not files."""
         return [x for x in me if isinstance(x, Directory)]
         
     def append(me, obj: FileObj) -> None:
-        """Shortcut : obj already has name; use as key."""
+        """Shortcut: just me.append(e) instead of me[e.name] = e."""
         me[obj.name] = obj
         
     def __str__(me):
-        """Indented tree below me."""
+        """Indent formatted for pretty-printing: whole tree below me."""
         indent = "  " * me.depth
         head = f"{me.name} (dir, size={me.size})"
         tail = f"\n".join(f"{indent} - {val}" for val in me)  # uses __iter__
@@ -70,7 +71,7 @@ class Directory(FileObj):
         return me._kids[name]
 
     def __setitem__(me, name: str, arg: FileObj) -> None:
-        """Add {arg.name: arg} to _files; if possible, set arg.parent->me."""
+        """Add {name: arg} to _kids; if arg is dir, set arg.parent->me."""
         me._kids[name] = arg
         if isinstance(arg, Directory):
             if arg.parent is not None:
@@ -151,9 +152,10 @@ def get_dirs(commands: list[str]) -> Directory:
             
 dirs = get_dirs(example)
 
-# %% ../nbs/day7.ipynb 36
+# %% ../nbs/day7.ipynb 37
 #| code-fold: true
 def sum_cutoff(start: Directory, cutoff=100_000) -> int:
+    """Return sum of sizes for dirs with size < cutoff."""
     subdirs = get_all_subdirs(start)
     sizes = [x[1] for x in subdirs if x[1] < 100_000]
     return sum(x for x in sizes if x <= cutoff)
