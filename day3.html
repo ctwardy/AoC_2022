@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="AoC Day3: Rucksack Reorganization">
+
+<title>AoC_2022 - day3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="AoC_2022 - day3">
+<meta property="og:description" content="AoC Day3: Rucksack Reorganization">
+<meta property="og:site-name" content="AoC_2022">
+<meta name="twitter:title" content="AoC_2022 - day3">
+<meta name="twitter:description" content="AoC Day3: Rucksack Reorganization">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">AoC_2022</span>
+    </a>
+  </div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">day3</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">AoC_2022</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./template.html" class="sidebar-item-text sidebar-link">day0</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link">core</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day2.html" class="sidebar-item-text sidebar-link">day2</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day3.html" class="sidebar-item-text sidebar-link active">day3</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day4.html" class="sidebar-item-text sidebar-link">day4</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day5.html" class="sidebar-item-text sidebar-link">day5</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day6.html" class="sidebar-item-text sidebar-link">day6</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day7.html" class="sidebar-item-text sidebar-link">day7</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#example" id="toc-example" class="nav-link active" data-scroll-target="#example">Example:</a>
+  <ul class="collapse">
+  <li><a href="#get_compartments" id="toc-get_compartments" class="nav-link" data-scroll-target="#get_compartments">get_compartments</a></li>
+  <li><a href="#get_shared" id="toc-get_shared" class="nav-link" data-scroll-target="#get_shared">get_shared</a></li>
+  <li><a href="#priority" id="toc-priority" class="nav-link" data-scroll-target="#priority">priority</a></li>
+  </ul></li>
+  <li><a href="#part-1" id="toc-part-1" class="nav-link" data-scroll-target="#part-1">Part 1</a>
+  <ul class="collapse">
+  <li><a href="#get-the-data" id="toc-get-the-data" class="nav-link" data-scroll-target="#get-the-data">Get the data</a></li>
+  <li><a href="#run" id="toc-run" class="nav-link" data-scroll-target="#run">Run</a></li>
+  </ul></li>
+  <li><a href="#part-2" id="toc-part-2" class="nav-link" data-scroll-target="#part-2">Part 2</a>
+  <ul class="collapse">
+  <li><a href="#find-badge-for-a-group" id="toc-find-badge-for-a-group" class="nav-link" data-scroll-target="#find-badge-for-a-group">Find badge for a group</a>
+  <ul class="collapse">
+  <li><a href="#get_badge" id="toc-get_badge" class="nav-link" data-scroll-target="#get_badge">get_badge</a></li>
+  <li><a href="#intersect" id="toc-intersect" class="nav-link" data-scroll-target="#intersect">intersect</a></li>
+  </ul></li>
+  <li><a href="#find-groups-from-packlist" id="toc-find-groups-from-packlist" class="nav-link" data-scroll-target="#find-groups-from-packlist">Find groups from packlist</a>
+  <ul class="collapse">
+  <li><a href="#get_groups" id="toc-get_groups" class="nav-link" data-scroll-target="#get_groups">get_groups</a></li>
+  </ul></li>
+  <li><a href="#run-1" id="toc-run-1" class="nav-link" data-scroll-target="#run-1">Run</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ctwardy/AoC_2022/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">day3</h1>
+</div>
+
+<div>
+  <div class="description">
+    AoC Day3: Rucksack Reorganization
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p>Each rucksack has two compartments. Items of a type should go into exactly one. Packing elf failed for exactly one item per rucksack.</p>
+<p><strong>Input:</strong> items now in each rucksack, 52 types a-zA-Z. First half in compartment 1, second in 2.</p>
+<p>Read on.</p>
+<section id="example" class="level2">
+<h2 class="anchored" data-anchor-id="example">Example:</h2>
+<p>Suppose we have the following list of 6 pack contents:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>example <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">vJrwpWtwJgWrhcsFMMfFFhFp</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">PmmdzqPrVvPwwTWBwg</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">ttgJtRGJQctTZtZT</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">CrZsJsPPZsGzwwsLwLmpwMDw</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>packs_ex <span class="op">=</span> example.split()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can get their lengths:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lengths <span class="op">=</span> [<span class="bu">len</span>(x) <span class="cf">for</span> x <span class="kw">in</span> packs_ex]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lengths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[24, 32, 18, 30, 16, 24]</code></pre>
+</div>
+</div>
+<p>Each pack is evenly divided into two comparments:</p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_compartments(packs: <span class="bu">list</span>[<span class="bu">str</span>] <span class="co"># List of pack contents like ['vJrwpWtw', ...]</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                    ) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">tuple</span>]: <span class="co"># Split each pack like ('vJrw', 'pWtw')</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Split each pack down the middle."""</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    lengths <span class="op">=</span> [<span class="bu">len</span>(x) <span class="cf">for</span> x <span class="kw">in</span> packs]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [(pack[:lengths[i]<span class="op">//</span><span class="dv">2</span>], pack[lengths[i]<span class="op">//</span><span class="dv">2</span>:]) </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> i, pack <span class="kw">in</span> <span class="bu">enumerate</span>(packs)]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>get_compartments(packs_ex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>[('vJrwpWtwJgWr', 'hcsFMMfFFhFp'),
+ ('jqHRNqRjqzjGDLGL', 'rsFMfFZSrLrFZsSL'),
+ ('PmmdzqPrV', 'vPwwTWBwg'),
+ ('wMqvLMZHhHMvwLH', 'jbvcjnnSBnvTQFn'),
+ ('ttgJtRGJ', 'QctTZtZT'),
+ ('CrZsJsPPZsGz', 'wwsLwLmpwMDw')]</code></pre>
+</div>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day3.py#L21" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="get_compartments" class="level3">
+<h3 class="anchored" data-anchor-id="get_compartments">get_compartments</h3>
+<blockquote class="blockquote">
+<pre><code> get_compartments (packs:list[str])</code></pre>
+</blockquote>
+<p>Split each pack down the middle.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>packs</td>
+<td>list</td>
+<td>List of pack contents like [‘vJrwpWtw’, …]</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>list</strong></td>
+<td><strong>Split each pack like (‘vJrw’, ‘pWtw’)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Note each pack has precisely <em>one</em> item that is in both compartments:</p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_shared(compartments: <span class="bu">list</span>[<span class="bu">tuple</span>] <span class="co"># ('vJrw','pWtw')</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>              ) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">str</span>]: <span class="co"># Single char like 'w' here.</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Find the shared item in each pack: same in both compartments."""</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="bu">set</span>(left).intersection(right).pop()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> left, right <span class="kw">in</span> compartments]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>shared <span class="op">=</span> get_shared(get_compartments(packs_ex))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>shared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>['p', 'L', 'P', 'v', 't', 's']</code></pre>
+</div>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day3.py#L32" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="get_shared" class="level3">
+<h3 class="anchored" data-anchor-id="get_shared">get_shared</h3>
+<blockquote class="blockquote">
+<pre><code> get_shared (compartments:list[tuple])</code></pre>
+</blockquote>
+<p>Find the shared item in each pack: same in both compartments.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>compartments</td>
+<td>list</td>
+<td>(‘vJrw’,‘pWtw’)</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>list</strong></td>
+<td><strong>Single char like ‘w’ here.</strong></td>
+</tr>
+</tbody>
+</table>
+<p>And each item has a priority:</p>
+<pre><code>   a..z -&gt; 1..26
+   A..Z -&gt; 27..52</code></pre>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>BASE_LOWER <span class="op">=</span> <span class="bu">ord</span>(<span class="st">"a"</span>) <span class="op">-</span> <span class="dv">1</span>    <span class="co"># 1..26</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>BASE_UPPER <span class="op">=</span> <span class="bu">ord</span>(<span class="st">"A"</span>) <span class="op">-</span> <span class="dv">27</span>   <span class="co"># 27..52</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> priority(char: <span class="bu">str</span> <span class="co"># Single char like 'w'</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>            ) <span class="op">-&gt;</span> <span class="bu">int</span>: <span class="co"># Priority 1..52</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return priority 1..52 of item in pack."""</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> char.lower() <span class="op">==</span> char:</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">ord</span>(char) <span class="op">-</span> BASE_LOWER</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">ord</span>(char) <span class="op">-</span> BASE_UPPER</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day3.py#L46" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="priority" class="level3">
+<h3 class="anchored" data-anchor-id="priority">priority</h3>
+<blockquote class="blockquote">
+<pre><code> priority (char:str)</code></pre>
+</blockquote>
+<p>Return priority 1..52 of item in pack.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>char</td>
+<td>str</td>
+<td>Single char like ‘w’</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>int</strong></td>
+<td><strong>Priority 1..52</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Test that</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> [priority(x) <span class="cf">for</span> x <span class="kw">in</span> shared] <span class="op">==</span> [<span class="dv">16</span>, <span class="dv">38</span>, <span class="dv">42</span>, <span class="dv">22</span>, <span class="dv">20</span>, <span class="dv">19</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="part-1" class="level1">
+<h1>Part 1</h1>
+<section id="get-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="get-the-data">Get the data</h2>
+<p>Decode both moves to R, P, S. Keep as a two-letter string like “RP”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../data/day3_input.txt"</span>) <span class="im">as</span> f:</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    packs1 <span class="op">=</span> [x.strip() <span class="cf">for</span> x <span class="kw">in</span> f.readlines()]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>packs1[:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>['CjhshBJCSrTTsLwqwqwb',
+ 'GtmnFHlDfcpHbLZjtTTRLWwb',
+ 'fDfNHHjVFNvvrvVBJJdS',
+ 'PPWvWQjPhrPQwlMWJJdMDGbJTdCJ',
+ 'rsqsStgNNggBNBZHSrJGdJdCFRRZCFbGbTdJ']</code></pre>
+</div>
+</div>
+</section>
+<section id="run" class="level2">
+<h2 class="anchored" data-anchor-id="run">Run</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>priorities <span class="op">=</span> [priority(x) <span class="cf">for</span> x <span class="kw">in</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    get_shared(get_compartments(packs1))]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>(priorities)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>7766</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="part-2" class="level1">
+<h1>Part 2</h1>
+<p>Elves are divided into “badged” groups of 3.</p>
+<p>The “badge” is the <strong>only item type carried by all 3</strong>.</p>
+<p>So in group <code>B</code>, all 3 elves have an item of type <code>B</code>. (Ok.) And at most two have any other item type. (<em>Wait, what?</em>)</p>
+<p>Every set of 3 lines in your list is a badge group. In the example, the first 3 lines are group <code>r</code> and the second is <code>Z</code>.</p>
+<p><strong>We need to generalize <code>get_shared()</code>.</strong> Let’s try <code>functools.reduce</code> and define <a href="https://ctwardy.github.io/AoC_2022/day3.html#get_badge"><code>get_badge</code></a> with that.</p>
+<section id="find-badge-for-a-group" class="level2">
+<h2 class="anchored" data-anchor-id="find-badge-for-a-group">Find badge for a group</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Collection</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> <span class="bu">reduce</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> intersect(left: Collection, <span class="co"># Items in first group</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>              right: Collection <span class="co"># Items in second group</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">-&gt;</span> <span class="bu">str</span>: <span class="co"># Items common to both </span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Find set intersection btw two args."""</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">set</span>(left).intersection(right)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_badge(group: <span class="bu">list</span>[<span class="bu">str</span>] <span class="co"># List of item names</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">-&gt;</span> <span class="bu">str</span>: <span class="co"># The single item common to all</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Find common item. Assumes there is precisely 1."""</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">reduce</span>(intersect, group).pop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day3.py#L65" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="get_badge" class="level3">
+<h3 class="anchored" data-anchor-id="get_badge">get_badge</h3>
+<blockquote class="blockquote">
+<pre><code> get_badge (group:list[str])</code></pre>
+</blockquote>
+<p>Find common item. Assumes there is precisely 1.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>group</td>
+<td>list</td>
+<td>List of item names</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>str</strong></td>
+<td><strong>The single item common to all</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day3.py#L59" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="intersect" class="level3">
+<h3 class="anchored" data-anchor-id="intersect">intersect</h3>
+<blockquote class="blockquote">
+<pre><code> intersect (left:Collection, right:Collection)</code></pre>
+</blockquote>
+<p>Find set intersection btw two args.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>left</td>
+<td>Collection</td>
+<td>Items in first group</td>
+</tr>
+<tr class="even">
+<td>right</td>
+<td>Collection</td>
+<td>Items in second group</td>
+</tr>
+<tr class="odd">
+<td><strong>Returns</strong></td>
+<td><strong>str</strong></td>
+<td><strong>Items common to both</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> get_badge(packs_ex[:<span class="dv">3</span>]) <span class="op">==</span> <span class="st">"r"</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> get_badge(packs_ex[<span class="dv">3</span>:<span class="dv">6</span>]) <span class="op">==</span> <span class="st">"Z"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="find-groups-from-packlist" class="level2">
+<h2 class="anchored" data-anchor-id="find-groups-from-packlist">Find groups from packlist</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_groups(packs: <span class="bu">list</span>[<span class="bu">str</span>] <span class="co"># List of all packs</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>              ) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">list</span>]:  <span class="co"># Divided into lists of 3</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Split packlist into groups of 3"""</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [[packs[i], packs[i<span class="op">+</span><span class="dv">1</span>], packs[i<span class="op">+</span><span class="dv">2</span>]]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(packs), <span class="dv">3</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day3.py#L72" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="get_groups" class="level3">
+<h3 class="anchored" data-anchor-id="get_groups">get_groups</h3>
+<blockquote class="blockquote">
+<pre><code> get_groups (packs:list[str])</code></pre>
+</blockquote>
+<p>Split packlist into groups of 3</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>packs</td>
+<td>list</td>
+<td>List of all packs</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>list</strong></td>
+<td><strong>Divided into lists of 3</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>get_groups(packs_ex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[['vJrwpWtwJgWrhcsFMMfFFhFp',
+  'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL',
+  'PmmdzqPrVvPwwTWBwg'],
+ ['wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn',
+  'ttgJtRGJQctTZtZT',
+  'CrZsJsPPZsGzwwsLwLmpwMDw']]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> [get_badge(group)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> group <span class="kw">in</span> get_groups(packs_ex)] <span class="op">==</span> [<span class="st">'r'</span>,<span class="st">'Z'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="run-1" class="level2">
+<h2 class="anchored" data-anchor-id="run-1">Run</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>badges <span class="op">=</span> [get_badge(group) </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> group <span class="kw">in</span> get_groups(packs1)]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>([priority(x) <span class="cf">for</span> x <span class="kw">in</span> badges])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>2415</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

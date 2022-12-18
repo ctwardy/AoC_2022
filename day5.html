@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Day 5: Supply Stacks">
+
+<title>AoC_2022 - day5</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="AoC_2022 - day5">
+<meta property="og:description" content="Day 5: Supply Stacks">
+<meta property="og:site-name" content="AoC_2022">
+<meta name="twitter:title" content="AoC_2022 - day5">
+<meta name="twitter:description" content="Day 5: Supply Stacks">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">AoC_2022</span>
+    </a>
+  </div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">day5</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">AoC_2022</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./template.html" class="sidebar-item-text sidebar-link">day0</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link">core</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day2.html" class="sidebar-item-text sidebar-link">day2</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day3.html" class="sidebar-item-text sidebar-link">day3</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day4.html" class="sidebar-item-text sidebar-link">day4</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day5.html" class="sidebar-item-text sidebar-link active">day5</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day6.html" class="sidebar-item-text sidebar-link">day6</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day7.html" class="sidebar-item-text sidebar-link">day7</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#example" id="toc-example" class="nav-link active" data-scroll-target="#example">Example:</a>
+  <ul class="collapse">
+  <li><a href="#starting-position" id="toc-starting-position" class="nav-link" data-scroll-target="#starting-position">Starting Position</a>
+  <ul class="collapse">
+  <li><a href="#print_state" id="toc-print_state" class="nav-link" data-scroll-target="#print_state">print_state</a></li>
+  <li><a href="#get_state" id="toc-get_state" class="nav-link" data-scroll-target="#get_state">get_state</a></li>
+  <li><a href="#print_stacks" id="toc-print_stacks" class="nav-link" data-scroll-target="#print_stacks">print_stacks</a></li>
+  <li><a href="#stackify" id="toc-stackify" class="nav-link" data-scroll-target="#stackify">stackify</a></li>
+  </ul></li>
+  <li><a href="#move-list" id="toc-move-list" class="nav-link" data-scroll-target="#move-list">Move List</a>
+  <ul class="collapse">
+  <li><a href="#print_moves" id="toc-print_moves" class="nav-link" data-scroll-target="#print_moves">print_moves</a></li>
+  <li><a href="#get_moves" id="toc-get_moves" class="nav-link" data-scroll-target="#get_moves">get_moves</a></li>
+  <li><a href="#move1box" id="toc-move1box" class="nav-link" data-scroll-target="#move1box">move1box</a></li>
+  <li><a href="#move" id="toc-move" class="nav-link" data-scroll-target="#move">move</a></li>
+  </ul></li>
+  <li><a href="#solve-example" id="toc-solve-example" class="nav-link" data-scroll-target="#solve-example">Solve Example</a>
+  <ul class="collapse">
+  <li><a href="#after-step-1" id="toc-after-step-1" class="nav-link" data-scroll-target="#after-step-1">After Step 1:</a></li>
+  <li><a href="#top_crates" id="toc-top_crates" class="nav-link" data-scroll-target="#top_crates">top_crates</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#part-1" id="toc-part-1" class="nav-link" data-scroll-target="#part-1">Part 1</a>
+  <ul class="collapse">
+  <li><a href="#get-the-data" id="toc-get-the-data" class="nav-link" data-scroll-target="#get-the-data">Get the data</a></li>
+  <li><a href="#run" id="toc-run" class="nav-link" data-scroll-target="#run">Run</a></li>
+  </ul></li>
+  <li><a href="#part-2" id="toc-part-2" class="nav-link" data-scroll-target="#part-2">Part 2</a>
+  <ul class="collapse">
+  <li><a href="#moveall" id="toc-moveall" class="nav-link" data-scroll-target="#moveall">moveall</a></li>
+  <li><a href="#run-1" id="toc-run-1" class="nav-link" data-scroll-target="#run-1">Run</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ctwardy/AoC_2022/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">day5</h1>
+</div>
+
+<div>
+  <div class="description">
+    Day 5: Supply Stacks
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p>The elves want to know <strong>which crate will end up on top of each stack</strong>.</p>
+<p>The input is a picture of the crates and a list of crane instructions for moving them. See below.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Crates are moved <strong>one at a time</strong>.</p>
+</div>
+</div>
+<section id="example" class="level1">
+<h1>Example:</h1>
+<p>Here is the starting position:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>example <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">    [D]    </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">[N] [C]    </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">[Z] [M] [P]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st"> 1   2   3 </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">move 1 from 2 to 1</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">move 3 from 1 to 3</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">move 2 from 2 to 1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">move 1 from 1 to 2</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>.strip(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)   <span class="co"># Drop leading blank</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    [D]    
+[N] [C]    
+[Z] [M] [P]
+ 1   2   3 
+
+move 1 from 2 to 1
+move 3 from 1 to 3
+move 2 from 2 to 1
+move 1 from 1 to 2</code></pre>
+</div>
+</div>
+<p>Okay, this is really two inputs separated by a blank line (<code>\n\n</code>).</p>
+<ul>
+<li><strong>state</strong> is in the top, columns 1, 5, 9, …, <span class="math inline">\(N-1\)</span>. <strong>Count by 4</strong></li>
+<li><strong>plan</strong> or <strong>move list</strong> is in the bottom, in basically CSV <code>#, from_col, to_col</code>.</li>
+</ul>
+<p>Stack 1 has two crates: [N] and [Z]. Stack 2 has 3 crates; stack 3 has 1.</p>
+<ul>
+<li>Step 1: move 1 crate (<code>D</code>) from stack 2 to stack 1.</li>
+<li>Step 2: move <strong>3 crates</strong> (<code>DNZ</code>) from 1 to 3 (becoming <code>ZNDP</code>).</li>
+</ul>
+<section id="starting-position" class="level2">
+<h2 class="anchored" data-anchor-id="starting-position">Starting Position</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split so it's like readlines.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> example.split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm the blanks go to the end of row</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> start[<span class="dv">0</span>][<span class="dv">9</span>] <span class="op">==</span> <span class="st">" "</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_state(rowdata: <span class="bu">list</span>[<span class="bu">str</span>]  <span class="co"># Data as if readlines</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>            )<span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">list</span>[<span class="bu">str</span>]]:  <span class="co"># Row-oriented list, top-down</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    ncols <span class="op">=</span> <span class="bu">len</span>(rowdata[<span class="dv">0</span>])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    nrows <span class="op">=</span> rowdata.index(<span class="st">""</span>) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [[row[i] </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>             <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, ncols, <span class="dv">4</span>)]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> row <span class="kw">in</span> rowdata[:nrows]]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_state(state: <span class="bu">list</span>[<span class="bu">list</span>[<span class="bu">str</span>]])<span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Print a picture of the state. Stacks should be vertical."""</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join(<span class="st">" "</span>.join(x) <span class="cf">for</span> x <span class="kw">in</span> state))</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" "</span>.join(<span class="ss">f"</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(state[<span class="dv">0</span>]))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day5.py#L17" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="print_state" class="level3">
+<h3 class="anchored" data-anchor-id="print_state">print_state</h3>
+<blockquote class="blockquote">
+<pre><code> print_state (state:list[list[str]])</code></pre>
+</blockquote>
+<p>Print a picture of the state. Stacks should be vertical.</p>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day5.py#L9" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="get_state" class="level3">
+<h3 class="anchored" data-anchor-id="get_state">get_state</h3>
+<blockquote class="blockquote">
+<pre><code> get_state (rowdata:list[str])</code></pre>
+</blockquote>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>rowdata</td>
+<td>list</td>
+<td>Data as if readlines</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>list</strong></td>
+<td><strong>Row-oriented list, top-down</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> get_state(start)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>print_state(state)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  D  
+N C  
+Z M P
+1 2 3</code></pre>
+</div>
+</div>
+<p>But it became clear I’d want that as actual stacks.</p>
+<p>Convert picture to list of stacks, removing blanks. If we kept the blanks this would be a simple <code>.T</code> transpose in numpy, but we want ragged stacks or we will stack crates on air.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> deque</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> stackify(state: <span class="bu">list</span>[<span class="bu">list</span>] <span class="co"># Crate state in visual format</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            )<span class="op">-&gt;</span> <span class="bu">list</span>[deque]:   <span class="co"># State as list of stacks, no blanks</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Convert row-oriented input to compact stacks, top=right."""</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    nrows, ncols <span class="op">=</span> <span class="bu">len</span>(state), <span class="bu">len</span>(state[<span class="dv">0</span>])</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [deque([state[row][col] <span class="cf">for</span> row <span class="kw">in</span> <span class="bu">range</span>(nrows<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> state[row][col] <span class="op">!=</span> <span class="st">" "</span>])</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> col <span class="kw">in</span> <span class="bu">range</span>(ncols)]</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_stacks(stacks: <span class="bu">list</span>[deque])<span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Print a horizontally-oriented picture of stacks"""</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="bu">max</span>(<span class="bu">len</span>(row) <span class="cf">for</span> row <span class="kw">in</span> stacks)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    pad <span class="op">=</span> [<span class="st">"  "</span><span class="op">*</span>(N <span class="op">-</span> <span class="bu">len</span>(row)) <span class="cf">for</span> row <span class="kw">in</span> stacks]</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, stack <span class="kw">in</span> <span class="bu">enumerate</span>(stacks):</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>(i<span class="op">+</span><span class="dv">1</span>)<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span><span class="st">' '</span><span class="sc">.</span>join(stack)<span class="sc">}{</span>pad[i]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day5.py#L35" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="print_stacks" class="level3">
+<h3 class="anchored" data-anchor-id="print_stacks">print_stacks</h3>
+<blockquote class="blockquote">
+<pre><code> print_stacks (stacks:list[collections.deque])</code></pre>
+</blockquote>
+<p>Print a horizontally-oriented picture of stacks</p>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day5.py#L27" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="stackify" class="level3">
+<h3 class="anchored" data-anchor-id="stackify">stackify</h3>
+<blockquote class="blockquote">
+<pre><code> stackify (state:list[list])</code></pre>
+</blockquote>
+<p>Convert row-oriented input to compact stacks, top=right.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>state</td>
+<td>list</td>
+<td>Crate state in visual format</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>list</strong></td>
+<td><strong>State as list of stacks, no blanks</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> [[<span class="st">' '</span>, <span class="st">'D'</span>, <span class="st">' '</span>],</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>     [<span class="st">'N'</span>, <span class="st">'C'</span>, <span class="st">' '</span>],</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>     [<span class="st">'Z'</span>, <span class="st">'M'</span>, <span class="st">'P'</span>],</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>     [<span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'3'</span>]]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> stackify(_) <span class="op">==</span> [deque([<span class="st">'1'</span>, <span class="st">'Z'</span>, <span class="st">'N'</span>]), deque([<span class="st">'2'</span>, <span class="st">'M'</span>, <span class="st">'C'</span>, <span class="st">'D'</span>]), deque([<span class="st">'3'</span>, <span class="st">'P'</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>stacks <span class="op">=</span> stackify(state)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>print_stacks(stacks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1 Z N  
+2 M C D
+3 P    </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="move-list" class="level2">
+<h2 class="anchored" data-anchor-id="move-list">Move List</h2>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day5.py#L56" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="print_moves" class="level3">
+<h3 class="anchored" data-anchor-id="print_moves">print_moves</h3>
+<blockquote class="blockquote">
+<pre><code> print_moves (moves:list[list[int]])</code></pre>
+</blockquote>
+<p>Verbosely print a terse movelist.</p>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day5.py#L43" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="get_moves" class="level3">
+<h3 class="anchored" data-anchor-id="get_moves">get_moves</h3>
+<blockquote class="blockquote">
+<pre><code> get_moves (rowdata:list[str])</code></pre>
+</blockquote>
+<p>Extract move data from input</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>rowdata</td>
+<td>list</td>
+<td>As from readlines</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>list</strong></td>
+<td><strong>[[n, from_col, to_col], …</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>moves <span class="op">=</span> get_moves(start)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>print_moves(moves)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Move 1 from 2 to 1
+Move 3 from 1 to 3
+Move 2 from 2 to 1
+Move 1 from 1 to 2</code></pre>
+</div>
+</div>
+<p>What is it to do a move? Line 1 moves the top crate <code>D</code> from stack 2 to stack 1. Iterated on these with some REPL. Quickly became clear I wanted <code>state</code> to be stacks so made a quick change to rotate the lists 90º and use <code>deque</code>. (Really could just use lists.)</p>
+<p>Note the <code>-1</code> to correct for 0-indexing. Would be nicer to include a hidden stack 0 so we don’t need that. Later.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> move(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    n:    <span class="bu">int</span><span class="op">|</span><span class="bu">str</span>,     <span class="co"># Move this many</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    from_col: <span class="bu">int</span><span class="op">|</span><span class="bu">str</span>, <span class="co"># From this stack</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    to_col:   <span class="bu">int</span><span class="op">|</span><span class="bu">str</span>, <span class="co"># To this stack</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    pos:  <span class="bu">list</span>,        <span class="co"># Position -&gt; Will be CHANGED!</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    )<span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Move `n` crates from `from_col` to `to_col`. Modifies in place."""</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    n, from_col, to_col <span class="op">=</span> <span class="bu">int</span>(n), <span class="bu">int</span>(from_col), <span class="bu">int</span>(to_col)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        move1box(pos[from_col <span class="op">-</span> <span class="dv">1</span>], pos[to_col <span class="op">-</span> <span class="dv">1</span>])</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> move1box(</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    from_stack: deque, <span class="co"># From this stack</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    to_stack:   deque, <span class="co"># To this stack</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    )<span class="op">-&gt;</span> <span class="va">None</span>:          <span class="co"># Modifies in place</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Move 1 crates from `from_stack` to `to_stack`."""</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    to_stack.append(from_stack.pop())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day5.py#L73" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="move1box" class="level3">
+<h3 class="anchored" data-anchor-id="move1box">move1box</h3>
+<blockquote class="blockquote">
+<pre><code> move1box (from_stack:collections.deque, to_stack:collections.deque)</code></pre>
+</blockquote>
+<p>Move 1 crates from <code>from_stack</code> to <code>to_stack</code>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>from_stack</td>
+<td>deque</td>
+<td>From this stack</td>
+</tr>
+<tr class="even">
+<td>to_stack</td>
+<td>deque</td>
+<td>To this stack</td>
+</tr>
+<tr class="odd">
+<td><strong>Returns</strong></td>
+<td><strong>None</strong></td>
+<td><strong>Modifies in place</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day5.py#L62" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="move" class="level3">
+<h3 class="anchored" data-anchor-id="move">move</h3>
+<blockquote class="blockquote">
+<pre><code> move (n:int|str, from_col:int|str, to_col:int|str, pos:list)</code></pre>
+</blockquote>
+<p>Move <code>n</code> crates from <code>from_col</code> to <code>to_col</code>. Modifies in place.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>n</td>
+<td>int | str</td>
+<td>Move this many</td>
+</tr>
+<tr class="even">
+<td>from_col</td>
+<td>int | str</td>
+<td>From this stack</td>
+</tr>
+<tr class="odd">
+<td>to_col</td>
+<td>int | str</td>
+<td>To this stack</td>
+</tr>
+<tr class="even">
+<td>pos</td>
+<td>list</td>
+<td>Position -&gt; Will be CHANGED!</td>
+</tr>
+<tr class="odd">
+<td><strong>Returns</strong></td>
+<td><strong>None</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Took about 45min to get to this point with the <em>first</em> versions of <a href="https://ctwardy.github.io/AoC_2022/day5.html#move"><code>move</code></a> and <a href="https://ctwardy.github.io/AoC_2022/day5.html#move1box"><code>move1box</code></a>, then had to stop for work. Given how straightforward this is, I’m suprised how long it takes me - documenting, thinking, little iterations &amp; tests.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>stacks <span class="op">=</span> stackify(state)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>move(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, stacks)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>stacks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[deque([]), deque(['M', 'C', 'D', 'N', 'Z']), deque(['P'])]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="solve-example" class="level2">
+<h2 class="anchored" data-anchor-id="solve-example">Solve Example</h2>
+<section id="after-step-1" class="level3">
+<h3 class="anchored" data-anchor-id="after-step-1">After Step 1:</h3>
+<p>Should be</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>step1 <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="st">[D]        </span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="st">[N] [C]    </span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="st">[Z] [M] [P]</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="st"> 1   2   3 </span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="st"> """</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>stacks <span class="op">=</span> stackify(state)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>move(<span class="op">*</span>moves[<span class="dv">0</span>], stacks)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>print_stacks(stacks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1 Z N D
+2 M C  
+3 P    </code></pre>
+</div>
+</div>
+<p>After Step 2:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>step2 <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="st">        [Z]</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="st">        [N]</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="st">    [C] [D]</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="st">    [M] [P]</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="st"> 1   2   3</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="st"> """</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>move(<span class="op">*</span>moves[<span class="dv">1</span>], stacks)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>print_stacks(stacks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1         
+2 M C    
+3 P D N Z</code></pre>
+</div>
+</div>
+<p>After Step 3:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>step3 <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="st">        [Z]</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="st">        [N]</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="st">[M]     [D]</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="st">[C]     [P]</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="st"> 1   2   3</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="st"> """</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>move(<span class="op">*</span>moves[<span class="dv">2</span>], stacks)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>print_stacks(stacks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1 C M    
+2         
+3 P D N Z</code></pre>
+</div>
+</div>
+<p>End, after Step 4:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>step4 <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="st">        [Z]</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="st">        [N]</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="st">        [D]</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="st">[C] [M] [P]</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="st"> 1   2   3</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="st"> """</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>move(<span class="op">*</span>moves[<span class="dv">3</span>], stacks)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>print_stacks(stacks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1 C      
+2 M      
+3 P D N Z</code></pre>
+</div>
+</div>
+<p>Crates on top are: <strong>[C] [M] [Z]</strong>.</p>
+<p>Answer would be <code>CMZ</code>.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> top_crates(stacks: <span class="bu">list</span>[deque]  <span class="co"># List of stacks</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>              )<span class="op">-&gt;</span> <span class="bu">str</span>:              <span class="co"># Crates on top</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Find the crates on top of each stack"""</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">""</span>.join(stack[<span class="op">-</span><span class="dv">1</span>] <span class="cf">for</span> stack <span class="kw">in</span> stacks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day5.py#L83" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="top_crates" class="level3">
+<h3 class="anchored" data-anchor-id="top_crates">top_crates</h3>
+<blockquote class="blockquote">
+<pre><code> top_crates (stacks:list[collections.deque])</code></pre>
+</blockquote>
+<p>Find the crates on top of each stack</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>stacks</td>
+<td>list</td>
+<td>List of stacks</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>str</strong></td>
+<td><strong>Crates on top</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Test that</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> top_crates(stacks) <span class="op">==</span> <span class="st">"CMZ"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="part-1" class="level1">
+<h1>Part 1</h1>
+<section id="get-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="get-the-data">Get the data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data/day5_input.txt"</span>) <span class="im">as</span> f:</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> [x.strip() <span class="cf">for</span> x <span class="kw">in</span> f.readlines()]</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>data[:<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>['[B]                     [N]     [H]',
+ '[V]         [P] [T]     [V]     [P]',
+ '[W]     [C] [T] [S]     [H]     [N]']</code></pre>
+</div>
+</div>
+</section>
+<section id="run" class="level2">
+<h2 class="anchored" data-anchor-id="run">Run</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>stacks <span class="op">=</span> stackify(get_state(data))</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> get_moves(data):</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    move(<span class="op">*</span>_, stacks)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>top_crates(stacks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>'PSNRGBTFT'</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="part-2" class="level1">
+<h1>Part 2</h1>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Oops!</strong> This crane can pick up all the boxen at once! It doesn’t have to go one at a time.</p>
+</div>
+</div>
+<p>Write a <a href="https://ctwardy.github.io/AoC_2022/day5.html#moveall"><code>moveall</code></a>, rerun, and say what the top crates will be.</p>
+<p>Don’t want to rewrite the parsing, so popping to a temp stack should work. Let’s try:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> deque([<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>])</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> deque([<span class="dv">1</span>])</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> <span class="bu">reversed</span>([d.pop() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>)]):</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    e.append(x)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>e</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>deque([1, 4, 5, 6])</code></pre>
+</div>
+</div>
+<p>Okay, implement that.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> moveall(</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    n:    <span class="bu">int</span><span class="op">|</span><span class="bu">str</span>,     <span class="co"># Move this many</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    from_col: <span class="bu">int</span><span class="op">|</span><span class="bu">str</span>, <span class="co"># From this stack</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    to_col:   <span class="bu">int</span><span class="op">|</span><span class="bu">str</span>, <span class="co"># To this stack</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    pos:  <span class="bu">list</span>,        <span class="co"># Position -&gt; Will be CHANGED!</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    )<span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Move `n` crates from `from_col` to `to_col` AS A GROUP."""</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    n, from_col, to_col <span class="op">=</span> <span class="bu">int</span>(n), <span class="bu">int</span>(from_col), <span class="bu">int</span>(to_col)</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>    old, new <span class="op">=</span> pos[from_col <span class="op">-</span> <span class="dv">1</span>], pos[to_col <span class="op">-</span> <span class="dv">1</span>]</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">reversed</span>([old.pop() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n)]):</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>        new.append(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day5.py#L90" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="moveall" class="level3">
+<h3 class="anchored" data-anchor-id="moveall">moveall</h3>
+<blockquote class="blockquote">
+<pre><code> moveall (n:int|str, from_col:int|str, to_col:int|str, pos:list)</code></pre>
+</blockquote>
+<p>Move <code>n</code> crates from <code>from_col</code> to <code>to_col</code> AS A GROUP.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>n</td>
+<td>int | str</td>
+<td>Move this many</td>
+</tr>
+<tr class="even">
+<td>from_col</td>
+<td>int | str</td>
+<td>From this stack</td>
+</tr>
+<tr class="odd">
+<td>to_col</td>
+<td>int | str</td>
+<td>To this stack</td>
+</tr>
+<tr class="even">
+<td>pos</td>
+<td>list</td>
+<td>Position -&gt; Will be CHANGED!</td>
+</tr>
+<tr class="odd">
+<td><strong>Returns</strong></td>
+<td><strong>None</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="run-1" class="level2">
+<h2 class="anchored" data-anchor-id="run-1">Run</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>stacks <span class="op">=</span> stackify(get_state(data))</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> get_moves(data):</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    moveall(<span class="op">*</span>_, stacks)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>top_crates(stacks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>'BNTZFPMMW'</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

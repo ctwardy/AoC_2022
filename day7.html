@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Day 7: No space left on device">
+
+<title>AoC_2022 - day7</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="AoC_2022 - day7">
+<meta property="og:description" content="Day 7: No space left on device">
+<meta property="og:site-name" content="AoC_2022">
+<meta name="twitter:title" content="AoC_2022 - day7">
+<meta name="twitter:description" content="Day 7: No space left on device">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">AoC_2022</span>
+    </a>
+  </div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">day7</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">AoC_2022</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./template.html" class="sidebar-item-text sidebar-link">day0</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link">core</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day2.html" class="sidebar-item-text sidebar-link">day2</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day3.html" class="sidebar-item-text sidebar-link">day3</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day4.html" class="sidebar-item-text sidebar-link">day4</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day5.html" class="sidebar-item-text sidebar-link">day5</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day6.html" class="sidebar-item-text sidebar-link">day6</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day7.html" class="sidebar-item-text sidebar-link active">day7</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#define-classes" id="toc-define-classes" class="nav-link active" data-scroll-target="#define-classes">Define classes</a>
+  <ul class="collapse">
+  <li><a href="#base-fileobj-file" id="toc-base-fileobj-file" class="nav-link" data-scroll-target="#base-fileobj-file">Base FileObj &amp; File</a>
+  <ul class="collapse">
+  <li><a href="#file" id="toc-file" class="nav-link" data-scroll-target="#file">File</a></li>
+  <li><a href="#fileobj" id="toc-fileobj" class="nav-link" data-scroll-target="#fileobj">FileObj</a></li>
+  </ul></li>
+  <li><a href="#directory" id="toc-directory" class="nav-link" data-scroll-target="#directory">Directory</a>
+  <ul class="collapse">
+  <li><a href="#directory-1" id="toc-directory-1" class="nav-link" data-scroll-target="#directory-1">Directory</a></li>
+  </ul></li>
+  <li><a href="#get-all-subdirs" id="toc-get-all-subdirs" class="nav-link" data-scroll-target="#get-all-subdirs">Get all subdirs</a>
+  <ul class="collapse">
+  <li><a href="#get_all_subdirs" id="toc-get_all_subdirs" class="nav-link" data-scroll-target="#get_all_subdirs">get_all_subdirs</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a>
+  <ul class="collapse">
+  <li><a href="#parse-the-dirs" id="toc-parse-the-dirs" class="nav-link" data-scroll-target="#parse-the-dirs">Parse the dirs</a>
+  <ul class="collapse">
+  <li><a href="#get_dirs" id="toc-get_dirs" class="nav-link" data-scroll-target="#get_dirs">get_dirs</a></li>
+  </ul></li>
+  <li><a href="#with-total-size-100k" id="toc-with-total-size-100k" class="nav-link" data-scroll-target="#with-total-size-100k">With total size ≤ 100K</a>
+  <ul class="collapse">
+  <li><a href="#sum_cutoff" id="toc-sum_cutoff" class="nav-link" data-scroll-target="#sum_cutoff">sum_cutoff</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#part-1" id="toc-part-1" class="nav-link" data-scroll-target="#part-1">Part 1</a>
+  <ul class="collapse">
+  <li><a href="#get-the-data" id="toc-get-the-data" class="nav-link" data-scroll-target="#get-the-data">Get the data</a></li>
+  <li><a href="#run" id="toc-run" class="nav-link" data-scroll-target="#run">Run</a></li>
+  <li><a href="#run-get_dirs-and-check" id="toc-run-get_dirs-and-check" class="nav-link" data-scroll-target="#run-get_dirs-and-check">Run <code>get_dirs</code> and check</a></li>
+  <li><a href="#run-get_all_subdirs-and-sum_cutoff" id="toc-run-get_all_subdirs-and-sum_cutoff" class="nav-link" data-scroll-target="#run-get_all_subdirs-and-sum_cutoff">Run <code>get_all_subdirs</code> and <code>sum_cutoff</code></a></li>
+  </ul></li>
+  <li><a href="#part-2" id="toc-part-2" class="nav-link" data-scroll-target="#part-2">Part 2</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ctwardy/AoC_2022/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">day7</h1>
+</div>
+
+<div>
+  <div class="description">
+    Day 7: No space left on device
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p>This one is more complicated. Going to start at the <em>end</em> of the description and work back.</p>
+<p>OK, I did, but as I worked back I kept adding things to the core classes, so it doesn’t start as simple as I did.</p>
+<hr>
+<p><strong>We will need to:</strong> find all of the directories with a total size of at most 100,000, then calculate the sum of their total sizes. In the example above, these directories are a and e; the sum of their total sizes is 95,437 (94,853 + 584). (As in this example, this process can count files more than once!)</p>
+<pre><code>- a (dir)
+    - e (dir)
+      - i (file, size=584)
+    - f (file, size=29116)
+    - g (file, size=2557)
+    - h.lst (file, size=62596)</code></pre>
+<section id="define-classes" class="level1">
+<h1>Define classes</h1>
+<section id="base-fileobj-file" class="level2">
+<h2 class="anchored" data-anchor-id="base-fileobj-file">Base FileObj &amp; File</h2>
+<p>Just names and sizes and <code>__str__</code>.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass, field</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FileObj():</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Base class for File &amp; Directory. Has a name"""</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    name: <span class="bu">str</span>   <span class="co"># Name of the file or dir.</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> File(FileObj):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Files have name and size"""</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    size: <span class="bu">int</span>   <span class="co"># Size of a file is given</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__str__</span>(me):</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>me<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> (file, size=</span><span class="sc">{</span>me<span class="sc">.</span>size<span class="sc">}</span><span class="ss">)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day7.py#L16" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="file" class="level3">
+<h3 class="anchored" data-anchor-id="file">File</h3>
+<blockquote class="blockquote">
+<pre><code> File (name:str, size:int)</code></pre>
+</blockquote>
+<p>Files have name and size</p>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day7.py#L11" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="fileobj" class="level3">
+<h3 class="anchored" data-anchor-id="fileobj">FileObj</h3>
+<blockquote class="blockquote">
+<pre><code> FileObj (name:str)</code></pre>
+</blockquote>
+<p>Base class for File &amp; Directory. Has a name</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> File(<span class="st">"i"</span>, <span class="dv">584</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> File(<span class="st">"f"</span>, <span class="dv">29116</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> File(<span class="st">"g"</span>, <span class="dv">2557</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> File(<span class="st">"h.lst"</span>, size<span class="op">=</span><span class="dv">62596</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> [i, f, g, h]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="ss">f"</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="op">==</span> <span class="st">"i (file, size=584)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="directory" class="level2">
+<h2 class="anchored" data-anchor-id="directory">Directory</h2>
+<p><strong>Directories</strong> compute their <code>.size</code> from their members. This is naturally recursive. 😊</p>
+<p>This <em>started</em> really simple &amp; grew as I needed methods later. Now has:</p>
+<ul>
+<li><code>parent</code> so we can build <code>path</code> and know <code>depth</code>.
+<ul>
+<li>Starts as <code>None</code>.</li>
+<li>Gets assigned when our parent adds us. (During <code>__setitem__</code> now.)</li>
+<li>Helps <code>__str__</code> get indents right</li>
+<li>Eliminates need to build separate list of dirs during input.</li>
+</ul></li>
+<li>Provides <code>[]</code> getting and setting items in dir.
+<ul>
+<li>Implementation changed from list to dict.</li>
+</ul></li>
+<li>Added <code>subdirs</code> to get just the kids that are dirs.</li>
+<li>Evicted a recursive version of that to a helper (below)</li>
+</ul>
+<div class="callout-alert callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Alert
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Initializing <code>_kids: []</code> turns all <a href="https://ctwardy.github.io/AoC_2022/day7.html#directory"><code>Directory</code></a> into Ender chests. Beware the <em>default-mutable</em>!</p>
+</div>
+</div>
+<div class="callout-alert callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Alert
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Solutions that worked in Example failed in Part 1 because (a) data has multiple dirs of same name (in different locations), &amp; (b) I ran the solution on the wrong arg.</p>
+</div>
+</div>
+<p>Doing (b) definitely caused a <em>too-low</em> error. I think it was (a) that caused the <em>too-high</em> error. But I didn’t find (b) until the end and by then fixing that fixed all.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Directory(FileObj):</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Directories have kids (files or dirs), and PARENT"""</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    parent: FileObj<span class="op">=</span><span class="va">None</span>  <span class="co"># My parent dir. Set when I'm appended.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    _kids: <span class="bu">dict</span>[<span class="bu">str</span>: FileObj] <span class="op">=</span> field(default_factory<span class="op">=</span><span class="bu">dict</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> size(me):</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Dir size is sum of kids' sizes."""</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">sum</span>(f.size <span class="cf">for</span> f <span class="kw">in</span> me._kids.values())</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> path(me) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""The path/to/me/.  &lt;- Note slash placement."""</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>me<span class="sc">.</span>parent<span class="sc">.</span>path<span class="sc">}{</span>me<span class="sc">.</span>name<span class="sc">}</span><span class="ss">/"</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">AttributeError</span>:</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>me<span class="sc">.</span>name<span class="sc">}</span><span class="ss">/"</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> depth(me):</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""How far down the tree am me?"""</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> me.path.count(<span class="st">"/"</span>) <span class="op">-</span> me.path.count(<span class="st">"//"</span>) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> subdirs(me):</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""My kids what could has kids. Not files."""</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [x <span class="cf">for</span> x <span class="kw">in</span> me <span class="cf">if</span> <span class="bu">isinstance</span>(x, Directory)]</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> append(me, obj: FileObj) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Shortcut: just me.append(e) instead of me[e.name] = e."""</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>        me[obj.name] <span class="op">=</span> obj</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__str__</span>(me):</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Indent formatted for pretty-printing: whole tree below me."""</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>        indent <span class="op">=</span> <span class="st">"  "</span> <span class="op">*</span> me.depth</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>        head <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>me<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> (dir, size=</span><span class="sc">{</span>me<span class="sc">.</span>size<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>        tail <span class="op">=</span> <span class="ss">f"</span><span class="ch">\n</span><span class="ss">"</span>.join(<span class="ss">f"</span><span class="sc">{</span>indent<span class="sc">}</span><span class="ss"> - </span><span class="sc">{</span>val<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> val <span class="kw">in</span> me)  <span class="co"># uses __iter__</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>head<span class="sc">}</span><span class="ch">\n</span><span class="sc">{</span>tail<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__iter__</span>(me):</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Return iterator of objects (not names!) in _kids."""</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">iter</span>(me._kids.values())</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(me, name: <span class="bu">str</span>) <span class="op">-&gt;</span> FileObj:</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Get member FileObj by name. Or die."""</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> me._kids[name]</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__setitem__</span>(me, name: <span class="bu">str</span>, arg: FileObj) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Add {name: arg} to _kids; if arg is dir, set arg.parent-&gt;me."""</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>        me._kids[name] <span class="op">=</span> arg</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(arg, Directory):</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> arg.parent <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span>(<span class="pp">ValueError</span>, <span class="st">"We are stealing someone else's kid!"</span>)</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>            arg.parent <span class="op">=</span> me</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day7.py#L26" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="directory-1" class="level3">
+<h3 class="anchored" data-anchor-id="directory-1">Directory</h3>
+<blockquote class="blockquote">
+<pre><code> Directory (name:str, parent:__main__.FileObj=None,
+            _kids:dict[slice(&lt;class'str'&gt;,&lt;class'__main__.FileObj'&gt;,None)]
+            =&lt;factory&gt;)</code></pre>
+</blockquote>
+<p>Directories have kids (files or dirs), and PARENT</p>
+<p>Test recursive size in 2-item case, and show <code>__str__</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> Directory(<span class="st">"e"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>e.append(i)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> e.size <span class="op">==</span> i.size <span class="op">==</span> <span class="dv">584</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> e[<span class="st">"i"</span>] <span class="op">==</span> i</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> e.depth <span class="op">==</span> <span class="dv">0</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>e (dir, size=584)
+ - i (file, size=584)</code></pre>
+</div>
+</div>
+<p>Ensure new Directory is independent! (Catch default mutable error.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> File(<span class="st">"f"</span>, <span class="dv">29116</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>root <span class="op">=</span> Directory(<span class="st">"/"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>root.append(f)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> root.size <span class="op">==</span> f.size <span class="op">==</span> <span class="dv">29116</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> root.depth <span class="op">==</span> <span class="dv">0</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(root)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>/ (dir, size=29116)
+ - f (file, size=29116)</code></pre>
+</div>
+</div>
+<p>Test recursive sum, depth, and indented <code>__str__</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> Directory(<span class="st">"a"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>root.append(a)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>g, h <span class="op">=</span> File(<span class="st">"g"</span>, <span class="dv">2557</span>), File(<span class="st">"h.lst"</span>, size<span class="op">=</span><span class="dv">62596</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>f2 <span class="op">=</span> File(<span class="st">"f"</span>, <span class="dv">512</span>) <span class="co"># &lt;- Another file named f!</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> f2 <span class="kw">is</span> <span class="kw">not</span> f</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> [e, f2, g, h, Directory(<span class="st">"k"</span>)]:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    a.append(item)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(root)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> a.size <span class="op">==</span> <span class="dv">66249</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> root.size <span class="op">==</span> f.size <span class="op">+</span> a.size</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> root.depth <span class="op">==</span> <span class="dv">0</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> a.depth <span class="op">==</span> <span class="dv">1</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> e.depth <span class="op">==</span> <span class="dv">2</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> a[<span class="st">"k"</span>].depth <span class="op">==</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>/ (dir, size=95365)
+ - f (file, size=29116)
+ - a (dir, size=66249)
+   - e (dir, size=584)
+     - i (file, size=584)
+   - f (file, size=512)
+   - g (file, size=2557)
+   - h.lst (file, size=62596)
+   - k (dir, size=0)
+</code></pre>
+</div>
+</div>
+<p>Test the <code>subdirs</code> property at two depths.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> [x.name <span class="cf">for</span> x <span class="kw">in</span> root.subdirs] <span class="op">==</span> [<span class="st">'a'</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> [x.name <span class="cf">for</span> x <span class="kw">in</span> a.subdirs] <span class="op">==</span> [<span class="st">'e'</span>, <span class="st">'k'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="get-all-subdirs" class="level2">
+<h2 class="anchored" data-anchor-id="get-all-subdirs">Get all subdirs</h2>
+<blockquote class="blockquote">
+<p>This is basically a filtered depth-first traversal.</p>
+</blockquote>
+<p>This used to return dir objects. Changed to (name, size) tuples while trying to track down Part1 error that turned out to be something else entirely. Could change back but, eh.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_all_subdirs(start: Directory) <span class="op">-&gt;</span> <span class="bu">list</span>[Directory]:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return flat list of (name, size) for _all_ dirs under `start` dir."""</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    my_dirs <span class="op">=</span> [(x.name, x.size) <span class="cf">for</span> x <span class="kw">in</span> start.subdirs]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _dir <span class="kw">in</span> start.subdirs:</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        my_dirs.extend(get_all_subdirs(_dir))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> my_dirs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day7.py#L84" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="get_all_subdirs" class="level3">
+<h3 class="anchored" data-anchor-id="get_all_subdirs">get_all_subdirs</h3>
+<blockquote class="blockquote">
+<pre><code> get_all_subdirs (start:__main__.Directory)</code></pre>
+</blockquote>
+<p>Return flat list of (name, size) for <em>all</em> dirs under <code>start</code> dir.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>get_all_subdirs(root)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[('a', 66249), ('e', 584), ('k', 0)]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> [x[<span class="dv">0</span>] <span class="cf">for</span> x <span class="kw">in</span> get_all_subdirs(root)] <span class="op">==</span> [<span class="st">'a'</span>, <span class="st">'e'</span>, <span class="st">'k'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>OK, looks good! Now need to read the data.</p>
+</section>
+</section>
+</section>
+<section id="example" class="level1">
+<h1>Example</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>example <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="st">$ cd /</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="st">$ ls</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="st">dir a</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="st">14848514 b.txt</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="st">8504156 c.dat</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="st">dir d</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="st">$ cd a</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="st">$ ls</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="st">dir e</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="st">29116 f</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="st">2557 g</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="st">62596 h.lst</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="st">$ cd e</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="st">$ ls</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="st">584 i</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="st">$ cd ..</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="st">$ cd ..</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="st">$ cd d</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="st">$ ls</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="st">4060174 j</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="st">8033020 d.log</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="st">5626152 d.ext</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="st">7214296 k</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>.strip().split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="parse-the-dirs" class="level2">
+<h2 class="anchored" data-anchor-id="parse-the-dirs">Parse the dirs</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_dirs(commands: <span class="bu">list</span>[<span class="bu">str</span>]) <span class="op">-&gt;</span> Directory:</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create dir tree from '/'. Return all dirs"""</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    root <span class="op">=</span> Directory(<span class="st">"/"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    dirstack <span class="op">=</span> [root]</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, line <span class="kw">in</span> <span class="bu">enumerate</span>(commands):</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        cur_dir <span class="op">=</span> dirstack[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">match</span> line.split():</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>            case (<span class="st">"$"</span>, <span class="st">"ls"</span>):</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>            case (<span class="st">"dir"</span>, dirname):</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                <span class="cf">try</span>:</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                    cur_dir[dirname]  <span class="co"># Should fail, unless twice ls same dir</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">print</span>(<span class="st">"*********** </span><span class="sc">{dirname}</span><span class="st"> already in </span><span class="sc">{cur_dir.name}</span><span class="st">!"</span>)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>                <span class="cf">except</span> <span class="pp">KeyError</span>:</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>                    cur_dir.append(Directory(dirname))</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            case (<span class="st">"$"</span>, <span class="st">"cd"</span>, dirname):</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                <span class="cf">match</span> dirname:</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"/"</span>:</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>                        dirstack <span class="op">=</span> [root]</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">".."</span>:</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>                        dirstack.pop()</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> _: </span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>                        dirstack.append(cur_dir[dirname])</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>                depth <span class="op">=</span> <span class="bu">len</span>(dirstack) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="st">"❚"</span> <span class="op">*</span> depth<span class="sc">}</span><span class="ch">\t</span><span class="ss">from cd </span><span class="sc">{</span>dirname<span class="sc">}</span><span class="ch">\t</span><span class="ss"> in line </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>            case (size, name):</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>                f <span class="op">=</span> File(name, <span class="bu">int</span>(size))</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>                cur_dir.append(f)</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">case</span> _:</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unrecognized line: '</span><span class="sc">{</span>line<span class="sc">}</span><span class="ss">'"</span>)</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> root</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>dirs <span class="op">=</span> get_dirs(example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    from cd /    in line 0
+❚   from cd a    in line 6
+❚❚  from cd e    in line 12
+❚   from cd ..   in line 15
+    from cd ..   in line 16
+❚   from cd d    in line 17</code></pre>
+</div>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day7.py#L120" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="get_dirs" class="level3">
+<h3 class="anchored" data-anchor-id="get_dirs">get_dirs</h3>
+<blockquote class="blockquote">
+<pre><code> get_dirs (commands:list[str])</code></pre>
+</blockquote>
+<p>Create dir tree from ‘/’. Return all dirs</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Test the parsing</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dirs)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(<span class="bu">str</span>(dirs).split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)) <span class="op">==</span> <span class="dv">14</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>/ (dir, size=48381165)
+ - a (dir, size=94853)
+   - e (dir, size=584)
+     - i (file, size=584)
+   - f (file, size=29116)
+   - g (file, size=2557)
+   - h.lst (file, size=62596)
+ - b.txt (file, size=14848514)
+ - c.dat (file, size=8504156)
+ - d (dir, size=24933642)
+   - j (file, size=4060174)
+   - d.log (file, size=8033020)
+   - d.ext (file, size=5626152)
+   - k (file, size=7214296)</code></pre>
+</div>
+</div>
+<p>We’re told: &gt; The total size of directory e is 584 because it contains a single file i of size 584 and no other directories. The directory a has total size 94853 because it contains files f (size 29116), g (size 2557), and h.lst (size 62596), plus file i indirectly (a contains e which contains i). Directory d has total size 24933642. As the outermost directory, / contains every file. Its total size is 48381165, the sum of the size of every file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> dirs[<span class="st">'a'</span>][<span class="st">'e'</span>].size <span class="op">==</span> <span class="dv">584</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> dirs[<span class="st">'a'</span>].size <span class="op">==</span> <span class="dv">94853</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> dirs[<span class="st">'d'</span>].size <span class="op">==</span> <span class="dv">24933642</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> dirs.size <span class="op">==</span> <span class="dv">48381165</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="comment-note">
+<p><strong>ToDo</strong> Special case <code>dirs["/"]</code> to get self?</p>
+</div>
+</section>
+</section>
+<section id="with-total-size-100k" class="level2">
+<h2 class="anchored" data-anchor-id="with-total-size-100k">With total size ≤ 100K</h2>
+<p>Goal: &gt; To begin, <strong>find all of the directories with a total size of at most 100,000, then calculate the sum of their total sizes</strong>. In the example above, these directories are <code>a</code> and <code>e</code>; the sum of their total sizes is 95,437 (94,853 + 584). (As in this example, this process can count files more than once!)</p>
+<p>The code below would be clearer if <a href="https://ctwardy.github.io/AoC_2022/day7.html#get_all_subdirs"><code>get_all_subdirs</code></a> returned objects instead of (name, size) tuples.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sum_cutoff(start: Directory, cutoff<span class="op">=</span><span class="dv">100_000</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return sum of sizes for dirs with size &lt; cutoff."""</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    subdirs <span class="op">=</span> get_all_subdirs(start)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    sizes <span class="op">=</span> [x[<span class="dv">1</span>] <span class="cf">for</span> x <span class="kw">in</span> subdirs <span class="cf">if</span> x[<span class="dv">1</span>] <span class="op">&lt;</span> <span class="dv">100_000</span>]</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(x <span class="cf">for</span> x <span class="kw">in</span> sizes <span class="cf">if</span> x <span class="op">&lt;=</span> cutoff)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/ctwardy/AoC_2022/blob/main/AoC_2022/day7.py#L157" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="sum_cutoff" class="level3">
+<h3 class="anchored" data-anchor-id="sum_cutoff">sum_cutoff</h3>
+<blockquote class="blockquote">
+<pre><code> sum_cutoff (start:__main__.Directory, cutoff=100000)</code></pre>
+</blockquote>
+<p>Return sum of sizes for dirs with size &lt; cutoff.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sum_cutoff(dirs) <span class="op">==</span> <span class="dv">95437</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="part-1" class="level1">
+<h1>Part 1</h1>
+<section id="get-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="get-the-data">Get the data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f"data/</span><span class="sc">{</span>NAME<span class="sc">}</span><span class="ss">_input.txt"</span>) <span class="im">as</span> f:</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> f.read()</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data.strip().split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Examine the data - because it broke code that worked on the example.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Data has </span><span class="sc">{</span><span class="bu">len</span>(data)<span class="sc">}</span><span class="ss"> commands. First few:"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join(x <span class="cf">for</span> x <span class="kw">in</span> data[:<span class="dv">10</span>]))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>lines_with_dir <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> data <span class="cf">if</span> x.startswith(<span class="st">'dir'</span>)]</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"There are </span><span class="sc">{</span><span class="bu">len</span>(lines_with_dir)<span class="sc">}</span><span class="ss"> lines with 'dir'."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data has 1014 commands. First few:
+$ cd /
+$ ls
+dir blgtdv
+dir dbrfcz
+dir fvspj
+dir hbjmndt
+dir hzg
+dir jpjgdm
+dir mtd
+dir pcpf
+There are 182 lines with 'dir'.</code></pre>
+</div>
+</div>
+<p>Note that names get reused!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fvspj <span class="op">=</span> [row <span class="cf">for</span> row <span class="kw">in</span> data <span class="cf">if</span> <span class="st">"cd fvspj"</span> <span class="kw">in</span> row]</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>fvspj2 <span class="op">=</span> [row <span class="cf">for</span> row <span class="kw">in</span> data <span class="cf">if</span> <span class="st">"dir fvspj"</span> <span class="kw">in</span> row]</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"There are </span><span class="sc">{</span><span class="bu">len</span>(fvspj)<span class="sc">}</span><span class="ss"> rows with 'cd fvspj'!"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"There are </span><span class="sc">{</span><span class="bu">len</span>(fvspj2)<span class="sc">}</span><span class="ss"> rows with 'dir fvspj'!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>There are 13 rows with 'cd fvspj'!
+There are 13 rows with 'dir fvspj'!</code></pre>
+</div>
+</div>
+</section>
+<section id="run" class="level2">
+<h2 class="anchored" data-anchor-id="run">Run</h2>
+</section>
+<section id="run-get_dirs-and-check" class="level2">
+<h2 class="anchored" data-anchor-id="run-get_dirs-and-check">Run <a href="https://ctwardy.github.io/AoC_2022/day7.html#get_dirs"><code>get_dirs</code></a> and check</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>part1_tree <span class="op">=</span> get_dirs(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Screenshot from output:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day7_files/figure-html/a8e27669-1-image.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image.png</figcaption><p></p>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(part1_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Screenshot from output:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day7_files/figure-html/a7d024b1-1-image.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image.png</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="run-get_all_subdirs-and-sum_cutoff" class="level2">
+<h2 class="anchored" data-anchor-id="run-get_all_subdirs-and-sum_cutoff">Run <a href="https://ctwardy.github.io/AoC_2022/day7.html#get_all_subdirs"><code>get_all_subdirs</code></a> and <a href="https://ctwardy.github.io/AoC_2022/day7.html#sum_cutoff"><code>sum_cutoff</code></a></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>part1_subdirs <span class="op">=</span> get_all_subdirs(part1_tree)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>data_dirs <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> data <span class="cf">if</span> x.startswith(<span class="st">"$ cd"</span>) <span class="kw">and</span> <span class="kw">not</span> x.endswith(<span class="st">".."</span>)]</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>n_getall <span class="op">=</span> <span class="bu">len</span>(part1_subdirs)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="ss">f"</span><span class="sc">{</span>n_getall<span class="sc">}</span><span class="ss"> from get_all_subdirs; </span><span class="sc">{</span><span class="bu">len</span>(data)<span class="sc">}</span><span class="ss"> commands, of which </span><span class="sc">{</span><span class="bu">len</span>(data_dirs)<span class="sc">}</span><span class="ss"> cd to dir."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>'182 from get_all_subdirs; 1014 commands, of which 183 cd to dir.'</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> n_getall <span class="op">&lt;=</span> <span class="bu">len</span>(data_dirs)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(data_dirs) <span class="op">&lt;</span> <span class="bu">len</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Answer!</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>sum_cutoff(part1_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>1667443</code></pre>
+</div>
+</div>
+<p>Correct answer for Part1: 1,667,443.</p>
+<ul>
+<li>Guess 1: 66833 -&gt; <strong>Too low</strong></li>
+<li>Guess 2: 214,201,382 -&gt; <strong>Too high</strong> Oh gosh yes, it’s larger than size of /!</li>
+</ul>
+<p><strong>D’oh!</strong> While some cleanups of the classes and functions no doubt helped, the core problem was:</p>
+<pre><code>sum_cutoff(root)</code></pre>
+<p>Rather than</p>
+<pre><code>sum_cutoff(part1_tree)</code></pre>
+<p>Copy/paste error: “root” was the <em>example</em>.</p>
+</section>
+</section>
+<section id="part-2" class="level1">
+<h1>Part 2</h1>
+<p>The total disk space on the file system is 70_000_000.</p>
+<p>To run the update, you need unused space of at least 30_000_000.</p>
+<p>Find the <strong>smallest</strong> directory that, if deleted, would free up enough space on the filesystem to run the update. <strong>What is the total size of that directory</strong>?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>disk_space <span class="op">=</span> <span class="dv">70_000_000</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>required <span class="op">=</span> <span class="dv">30_000_000</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>used <span class="op">=</span> part1_tree.size</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>free <span class="op">=</span> disk_space <span class="op">-</span> used</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>needed <span class="op">=</span> required <span class="op">-</span> free</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>needed<span class="sc">:,}</span><span class="ss"> needed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>7,870,454 needed</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>candidates <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> part1_subdirs <span class="cf">if</span> x[<span class="dv">1</span>] <span class="op">&gt;</span> needed]</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>candidates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[('jpjgdm', 30324496),
+ ('tgrplmn', 13900160),
+ ('lpv', 12331326),
+ ('bjlcfcfq', 8998590)]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="bu">min</span>(candidates, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>('bjlcfcfq', 8998590)</code></pre>
+</div>
+</div>
+<p>Well that was straightforward once I had Part 1!</p>
+<hr>
+<p>Footer: nbdev magic</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

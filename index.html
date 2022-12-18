@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Charles’ Advent of Code 2022 Entries">
+
+<title>AoC_2022</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="AoC_2022">
+<meta property="og:description" content="Charles' Advent of Code 2022 Entries">
+<meta property="og:site-name" content="AoC_2022">
+<meta name="twitter:title" content="AoC_2022">
+<meta name="twitter:description" content="Charles' Advent of Code 2022 Entries">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">AoC_2022</span>
+    </a>
+  </div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">AoC_2022</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">AoC_2022</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./template.html" class="sidebar-item-text sidebar-link">day0</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link">core</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day2.html" class="sidebar-item-text sidebar-link">day2</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day3.html" class="sidebar-item-text sidebar-link">day3</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day4.html" class="sidebar-item-text sidebar-link">day4</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day5.html" class="sidebar-item-text sidebar-link">day5</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day6.html" class="sidebar-item-text sidebar-link">day6</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day7.html" class="sidebar-item-text sidebar-link">day7</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#explore" id="toc-explore" class="nav-link active" data-scroll-target="#explore">Explore</a></li>
+  <li><a href="#how-to-use" id="toc-how-to-use" class="nav-link" data-scroll-target="#how-to-use">How to use</a></li>
+  <li><a href="#observations" id="toc-observations" class="nav-link" data-scroll-target="#observations">Observations</a>
+  <ul class="collapse">
+  <li><a href="#day-1-calorie-counting" id="toc-day-1-calorie-counting" class="nav-link" data-scroll-target="#day-1-calorie-counting">Day 1: Calorie Counting</a></li>
+  <li><a href="#day-2-rock-paper-scissors" id="toc-day-2-rock-paper-scissors" class="nav-link" data-scroll-target="#day-2-rock-paper-scissors">Day 2: Rock Paper Scissors</a></li>
+  <li><a href="#day-3-rucksack-reorg" id="toc-day-3-rucksack-reorg" class="nav-link" data-scroll-target="#day-3-rucksack-reorg">Day 3: Rucksack Reorg</a></li>
+  <li><a href="#day-4-camp-cleanup" id="toc-day-4-camp-cleanup" class="nav-link" data-scroll-target="#day-4-camp-cleanup">Day 4: Camp Cleanup</a></li>
+  <li><a href="#day-5-supply-stacks" id="toc-day-5-supply-stacks" class="nav-link" data-scroll-target="#day-5-supply-stacks">Day 5: Supply Stacks</a></li>
+  <li><a href="#day-6-tuning-trouble" id="toc-day-6-tuning-trouble" class="nav-link" data-scroll-target="#day-6-tuning-trouble">Day 6: Tuning Trouble</a></li>
+  <li><a href="#day-7-no-space-on-device" id="toc-day-7-no-space-on-device" class="nav-link" data-scroll-target="#day-7-no-space-on-device">Day 7: No space on device</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ctwardy/AoC_2022/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">AoC_2022</h1>
+</div>
+
+<div>
+  <div class="description">
+    Charles’ Advent of Code 2022 Entries
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p>This is my first year of AoC, and I’ve decided to use it to practice with <a href="https://nbdev.fast.ai">nbdev</a> to automatically generate modules and <a href="https://ctwardy.github.io/AoC_2022/">documentation</a> from my notebooks.</p>
+<p>I’ll probably evolve my organization as I go. I did Day 1 with a regular python module and that made sense to put each day in its own folder with data as <code>input.txt</code>. But I think with nbdev it makes sense to have the usual <code>nbs</code> folder for all the notebooks, one per day. In that case I’ll put the data in <code>data/dayX_input.txt</code>. Like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>ls data<span class="op">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>day0_example.txt day3_input.txt   day6_example.txt
+day0_input.txt   day4_input.txt   day6_input.txt
+day2_input.txt   day5_input.txt   day7_input.txt</code></pre>
+</div>
+</div>
+<p><img src="https://github.com/ctwardy/AoC_2022/actions/workflows/test.yaml/badge.svg" class="img-fluid" alt="CI"> <img src="https://github.com/ctwardy/AoC_2022/actions/workflows/deploy.yaml/badge.svg" class="img-fluid" alt="Deploy"></p>
+<p>Not sure the AoC badges are working quite right? Do I have to update manually?</p>
+<p><img src="https://img.shields.io/badge/day%20📅-8-blue.png" class="img-fluid"> <img src="https://img.shields.io/badge/stars%20⭐-14-yellow.png" class="img-fluid"> <img src="https://img.shields.io/badge/days%20completed-7-red.png" class="img-fluid"></p>
+<section id="explore" class="level2">
+<h2 class="anchored" data-anchor-id="explore">Explore</h2>
+<p>Please feel free to:</p>
+<ul>
+<li><a href="https://ctwardy.github.io/AoC_2022/">Browse the lovely documentation</a> automatically generated by nbdev, or</li>
+<li><a href="https://github.com/ctwardy/AoC_2022">View the code</a>.</li>
+</ul>
+</section>
+<section id="how-to-use" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-use">How to use</h2>
+<p>Nbdev creates python modules from notebooks, so if you clone the repo you can call exported functions using the <code>AoC_2022</code> package.</p>
+<ol type="1">
+<li>Get the code. If using the GitHub CLI:</li>
+</ol>
+<pre class="shell"><code>gh repo clone ctwardy/AoC_2022</code></pre>
+<ol start="2" type="1">
+<li>Install the package locally so <code>AoC_2022</code> is in your namespace.</li>
+</ol>
+<pre class="shell"><code>pip install -e '.[dev]'</code></pre>
+<p>Then you can do something like this:</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> AoC_2022.day2 <span class="im">as</span> day2</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data/day2_input.txt"</span>) <span class="im">as</span> f:</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> [day2.rps_decode(x.strip()) <span class="cf">for</span> x <span class="kw">in</span> f.readlines()]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>day2.score_strategy(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>13022</code></pre>
+</div>
+</div>
+</section>
+<section id="observations" class="level1">
+<h1>Observations</h1>
+<section id="day-1-calorie-counting" class="level2">
+<h2 class="anchored" data-anchor-id="day-1-calorie-counting">Day 1: Calorie Counting</h2>
+<p>Wait! It’s December already? OK, just write Python using nano and commandline. That wasn’t so bad. I’m not fast, but it was straightforward.</p>
+</section>
+<section id="day-2-rock-paper-scissors" class="level2">
+<h2 class="anchored" data-anchor-id="day-2-rock-paper-scissors">Day 2: Rock Paper Scissors</h2>
+<p>OK, installed the new nbdev. Used <code>str.translate</code> to change from ABC to RPS. In Part 2 that needed an extra step to look at the opponents move, but strategy dictionary seemed an okay approach.</p>
+</section>
+<section id="day-3-rucksack-reorg" class="level2">
+<h2 class="anchored" data-anchor-id="day-3-rucksack-reorg">Day 3: Rucksack Reorg</h2>
+<p>Learning more nbdev features like docments and code-folding. I think docments make the function declaration slightly uglier, but the generated docs are amazing. Worth it.</p>
+<p><strong>Programming</strong>: got to use <code>functools.reduce</code>.</p>
+<p><strong>Nbdev</strong>: Local docs were pretty easy. Spent <em>hours</em> troubleshooting on GitHub. Docs didn’t like index.ipynb using <code>../data/</code> for file location. Solved by making <code>nbs/data -&gt; ../data</code> and then referring to <code>data/</code>. Later saw this in the docs:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All documentation related files should be included in your nbs_path, and all paths should be relative to it. …</p>
+</div>
+</div>
+</section>
+<section id="day-4-camp-cleanup" class="level2">
+<h2 class="anchored" data-anchor-id="day-4-camp-cleanup">Day 4: Camp Cleanup</h2>
+<p>Was able to follow the Day 3 nbdev template. Solution was straightforward, but all told still me a bit more than an hour. Hm. Over 90 minutes after adding this section to the README (index.ipynb). Nbdev makes documentation tempting. That’s not necessarily a bad thing.</p>
+<p><strong>Nbdev</strong>: <code>nbdev_prep</code> caught a leftover day3 cell at the bottom of my day4 notebook. Cool. But after fixing, the running preview still didn’t have day4. But stopping and re-running did. Guess that’s a thing.</p>
+</section>
+<section id="day-5-supply-stacks" class="level2">
+<h2 class="anchored" data-anchor-id="day-5-supply-stacks">Day 5: Supply Stacks</h2>
+<p>This took me surprisingly long. I had the example parsed in 45 minutes, but then realized <code>move()</code> would be easier with stacks, and iterating on that entered a regress. Once the example ran, Part 1 followed with one tweak, then Part 2 needed only a quick rewrite of <code>move()</code>.</p>
+<p><strong>Nbdev</strong>: Worked locally but GitHub CI still failed. Hoo boy.</p>
+<ol type="1">
+<li><code>import numpy</code> but <code>numpy</code> not found. Either add <code>numpy</code> dependency to <code>settings.ini</code> or drop. Not using yet. Dropped.</li>
+<li>I had used 3.10 type hints like <code>int|str</code>. But GH was using 3.9 so this failed in CI. Bumped <code>settings.ini</code> to specify 3.10.</li>
+<li>GH still using 3.9, which now failed to satisfy min version.</li>
+<li>Changed <code>setup.py</code> to force 3.10. Same error.</li>
+<li>Modify <code>.github/workflows/test.yml</code> per <a href="https://forums.fast.ai/t/python-version-error-while-running-ci-operations-in-github/98482/8">this forum post</a>. Same type hints error.</li>
+<li>Go back to min of 3.8, and use <code>from __future__ import annotations</code>. Supposed to work. Same error.</li>
+<li>Add 3.10 to <code>.github/workflows/deploy.yml</code> as well. Kill <code>__future__</code>. Success.</li>
+</ol>
+<p>Combo of something not quite working in <code>nbdev</code> config, and me not knowing how GitHub CI worked. Better now, I think.</p>
+</section>
+<section id="day-6-tuning-trouble" class="level2">
+<h2 class="anchored" data-anchor-id="day-6-tuning-trouble">Day 6: Tuning Trouble</h2>
+<p>This one was much easier. About 7-10 minutes to write up the example, and another 5-10 minutes to solve. It was quick to see that <code>len(set(s)) == n</code> would do it. The rest was just typing and fixing.</p>
+<p><strong>Nbdev:</strong> ran find, but <code>nbdev_preview</code> hit a weird glitch where it forgot <code>examples</code> in the cell defining <code>get_pos_firstn_uniq()</code>, despite knowing it in the previous or next cell. So I just split the cell.</p>
+</section>
+<section id="day-7-no-space-on-device" class="level2">
+<h2 class="anchored" data-anchor-id="day-7-no-space-on-device">Day 7: No space on device</h2>
+<p>Needed recursive ops to make &amp; query a directory tree. Started with a simple class, then two helpers. Then noticed calls could be simpler if I defined magic methods like <code>__getitem__</code> and <code>__iter__</code>. Realized dirs needed to track <code>parent</code> which provided full <code>path</code> and <code>depth</code>. Recursion took some tuning. <strong>Lessons learned:</strong></p>
+<ul>
+<li><strong>Software Eng:</strong> Beware copy/paste! Lost hours because call to Part1 had the wrong input. 🤦‍♂️</li>
+<li><strong>Software Eng:</strong> Incremental tests helped. Also, don’t be clever.</li>
+<li><strong>Classes:</strong> <a href="https://ctwardy.github.io/AoC_2022/day7.html#directory"><code>Directory</code></a> methods <em>can</em> use <code>isinstance(arg, Directory)</code>: it’s not defined yet, but it <em>will be</em> before use. Clearer and more correct than <code>if type(x) == type(me)</code>. But until 3.11 we can’t use <a href="https://ctwardy.github.io/AoC_2022/day7.html#directory"><code>Directory</code></a> as a type hint inside <a href="https://ctwardy.github.io/AoC_2022/day7.html#directory"><code>Directory</code></a>.</li>
+<li><strong>Default mutable!</strong> Declaring <code>_kids = []</code> as a <code>@dataclass</code> is a default mutable in <code>__init__</code>. Bad!</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
