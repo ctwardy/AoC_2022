@@ -149,3 +149,8 @@ checklink/cookies.txt
 
 # Quarto
 .quarto
+
+
+# Project-specific
+data/
+

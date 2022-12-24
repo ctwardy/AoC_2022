@@ -53,4 +53,9 @@ d = { 'settings': { 'branch': 'main',
                                'AoC_2022.day7.FileObj': ('day7.html#fileobj', 'AoC_2022/day7.py'),
                                'AoC_2022.day7.get_all_subdirs': ('day7.html#get_all_subdirs', 'AoC_2022/day7.py'),
                                'AoC_2022.day7.get_dirs': ('day7.html#get_dirs', 'AoC_2022/day7.py'),
-                               'AoC_2022.day7.sum_cutoff': ('day7.html#sum_cutoff', 'AoC_2022/day7.py')}}}
+                               'AoC_2022.day7.sum_cutoff': ('day7.html#sum_cutoff', 'AoC_2022/day7.py')},
+            'AoC_2022.day8': { 'AoC_2022.day8.assert_all': ('day8.html#assert_all', 'AoC_2022/day8.py'),
+                               'AoC_2022.day8.edges': ('day8.html#edges', 'AoC_2022/day8.py'),
+                               'AoC_2022.day8.scenic_scores': ('day8.html#scenic_scores', 'AoC_2022/day8.py'),
+                               'AoC_2022.day8.vismap': ('day8.html#vismap', 'AoC_2022/day8.py'),
+                               'AoC_2022.day8.where_if': ('day8.html#where_if', 'AoC_2022/day8.py')}}}
