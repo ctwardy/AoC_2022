@@ -173,3 +173,32 @@ Recursion took some tuning. **Lessons learned:**
   [`Directory`](https://ctwardy.github.io/AoC_2022/day7.html#directory).
 - **Default mutable!** Declaring `_kids = []` as a `@dataclass` is a
   default mutable in `__init__`. Bad!
+
+## –\> Remove Data, Break CI & Pages \<–
+
+**Removed AoC data from GitHub.**
+
+Alas, that means the GitHub CI fails because the notebooks won’t find
+their data. And that means the nice pages docs won’t build.
+
+Hm.
+
+Fetching the data from AoC requires login - will have to look into how
+to use secrets in GitHub CI.
+
+## Day 8: Treehouse
+
+Straightforward but finicky. Lots of fixing off-by-one-ish errors,
+esp. Part 2.
+
+**Part 1** had two short functions: `edges()` used `np.pad()` to make a
+border of `1`s, then `vismap()` used a nested for loop to check the
+interior. Had to remember `.all()`, like `(row < height).all()`.
+
+**Part 2** is just a nested loop, but ugly math to handle off-by-one and
+edge effects. Like
+
+    right = 1 + where_if(row[j+1:] >= height, 
+                         _else=cols-j-2)[0]
+
+I’m sure there must be a clearer approach.
