@@ -188,8 +188,8 @@ to use secrets in GitHub CI.
 
 ## Day 8: Treehouse
 
-Straightforward but finicky. Lots of fixing off-by-one-ish errors,
-esp. Part 2.
+Straightforward but finicky. Many off-by-one-ish errors, esp. Part 2.
+Two mornings.
 
 **Part 1** had two short functions: `edges()` used `np.pad()` to make a
 border of `1`s, then `vismap()` used a nested for loop to check the
